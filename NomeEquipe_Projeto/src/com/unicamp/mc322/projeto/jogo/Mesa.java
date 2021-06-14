@@ -14,6 +14,7 @@ public class Mesa {
 	private Jogador jogador2;
 	
 	private Jogador atacante;
+	private Jogador defensor;
 	private int quantidadeRodadas;
 	
 	private ArrayList<Unidade> unidadesEvocadasJogador1;
@@ -21,6 +22,7 @@ public class Mesa {
 	
 	private Unidade[] unidadesEmCampoAtacante;
 	private Unidade[] unidadesEmCampoDefensor;
+	private int quantidadeCartasAtaque;
 	
 	public Mesa(Jogador jogador1, Jogador jogador2) {
 		this.jogador1 = jogador1;
@@ -36,9 +38,11 @@ public class Mesa {
 		
 		if (atacante == null || atacante == jogador2) {
 			atacante = jogador1;
+			defensor = jogador2;
 		}
 		else {
 			atacante = jogador2;
+			defensor = jogador1;
 		}
 		
 		jogador1.pegarCarta();
@@ -48,8 +52,99 @@ public class Mesa {
 		jogador2.resetarMana(quantidadeRodadas);
 	}
 	
-	public boolean evocarCarta(Jogador jogador, int indexMao) {
-		ArrayList<Unidade> unidadesEvocadas = jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
+	public void realizarTurnoAtacante() {
+		
+		realizarEvocacaoCartas(atacante);
+		
+		realizarSubstituicaoCartas(atacante);
+		
+		boolean montarAtaque = true;
+		while (montarAtaque) {
+			ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(atacante);
+			int indexMesa = atacante.escolherUnidadeParaCampo(unidadesEvocadas.size());
+			
+			for (; indexMesa >= 0; indexMesa = atacante.escolherUnidadeParaCampo(unidadesEvocadas.size())) {
+				if (colocarCartaEmCampo(atacante, indexMesa, quantidadeCartasAtaque))
+					quantidadeCartasAtaque++;
+			}
+			
+			if (indexMesa < 0)
+				montarAtaque = false;
+		}
+		
+		finalizarTurno(atacante);
+	}
+	
+	public void realizarTurnoDefensor() {
+		realizarEvocacaoCartas(defensor);
+		
+		realizarSubstituicaoCartas(defensor);
+		
+		boolean montarDefesa = verificarAtaqueMontado();
+		while (montarDefesa) {
+			ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(defensor);
+			int indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size());
+			
+			for (; indexMesa >= 0; indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size())) {
+				int indexDefesa = defensor.escolherPosicaoDefesa(quantidadeCartasAtaque);
+				colocarCartaEmCampo(atacante, indexMesa, indexDefesa);
+			}
+			
+			if (indexMesa < 0)
+				montarDefesa = false;
+		}
+		
+		finalizarTurno(defensor);
+	}
+	
+	public void realizarCombate() {
+		for (int i = 0; i < unidadesEmCampoAtacante.length; i++) {
+			if (unidadesEmCampoAtacante[i] != null) {
+				if (unidadesEmCampoDefensor[i]!= null) {
+					unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
+				}
+				else {
+					unidadesEmCampoAtacante[i].atacar(defensor);
+				}
+			}
+		}
+		
+		removerCartasEmCampo(jogador1);
+		removerCartasEmCampo(jogador2);
+		quantidadeCartasAtaque = 0;
+	}
+	
+	private void realizarEvocacaoCartas(Jogador jogador) {
+		boolean evocarCarta = true;
+		while (evocarCarta) {
+			int indexMao = jogador.escolherCartaNaMao(true);
+			
+			if (indexMao > 0)
+				evocarCarta = !evocarCarta(jogador, indexMao);
+			else
+				evocarCarta = false;
+		}
+	}
+	
+	private void realizarSubstituicaoCartas(Jogador jogador) {
+		boolean substituirCarta = true;
+		int quantidadeUnidades = getUnidadesEvocadas(jogador).size();
+		
+		while (substituirCarta) {
+			int indexMesa = jogador.escolherUnidadeParaTroca(quantidadeUnidades);
+			
+			for (; indexMesa >= 0; indexMesa = jogador.escolherUnidadeParaTroca(quantidadeUnidades)) {
+				int indexMao = jogador.escolherCartaNaMao(false);
+				substituirCarta(jogador, indexMao, indexMesa);
+			}
+			
+			if (indexMesa < 0)
+				substituirCarta = false;
+		}
+	}
+	
+	private boolean evocarCarta(Jogador jogador, int indexMao) {
+		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		Carta evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		if (evocada != null) {
@@ -65,8 +160,8 @@ public class Mesa {
 		return false;
 	}
 	
-	public boolean substituirCarta(Jogador jogador, int indexMao, int indexMesa) {
-		ArrayList<Unidade> unidadesEvocadas = jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
+	private void substituirCarta(Jogador jogador, int indexMao, int indexMesa) {
+		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		Carta substituida = unidadesEvocadas.get(indexMesa);
 		Carta substituta = jogador.substituirCarta(indexMao, substituida);
@@ -78,16 +173,12 @@ public class Mesa {
 			if(substituta instanceof Unidade) {
 				unidadesEvocadas.add((Unidade)substituta);
 			}
-			
-			return true;
 		}
-		
-		return false;
 	}
 	
-	public boolean colocarCartaEmCampo(Jogador jogador, int indexEvocadas, int indexCampo) {
-		ArrayList<Unidade> unidadesEvocadas = jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
-		Unidade[] unidadesEmCampo = jogador == atacante ? unidadesEmCampoAtacante : unidadesEmCampoDefensor;
+	private boolean colocarCartaEmCampo(Jogador jogador, int indexEvocadas, int indexCampo) {
+		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		Unidade[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		if (unidadesEmCampo[indexCampo] == null) {
 			unidadesEmCampo[indexCampo] = unidadesEvocadas.remove(indexEvocadas);
@@ -96,23 +187,7 @@ public class Mesa {
 		return false;
 	}
 	
-	public void realizarCombate() {
-		for (int i = 0; i < unidadesEmCampoAtacante.length; i++) {
-			if (unidadesEmCampoAtacante[i] != null) {
-				if (unidadesEmCampoDefensor[i]!= null) {
-					unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
-				}
-				else {
-					unidadesEmCampoAtacante[i].atacar(atacante == jogador1 ? jogador2 : jogador1);
-				}
-			}
-		}
-		
-		removerCartasEmCampo(jogador1);
-		removerCartasEmCampo(jogador2);
-	}
-	
-	public void finalizarTurno(Jogador jogador) {
+	private void finalizarTurno(Jogador jogador) {
 		ArrayList<Unidade> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
 		for (Unidade unidade : unidadesEvocadasOutroJogador) {
 			unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
@@ -120,8 +195,8 @@ public class Mesa {
 	}
 
 	private void removerCartasEmCampo(Jogador jogador) {
-		ArrayList<Unidade> unidadesEvocadas = jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
-		Unidade[] unidadesEmCampo = jogador == atacante ? unidadesEmCampoAtacante : unidadesEmCampoDefensor;
+		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		Unidade[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		for (int i = 0; i < unidadesEmCampo.length; i++) {
 			if (unidadesEmCampo[i] != null) {
@@ -135,5 +210,21 @@ public class Mesa {
 	
 	private boolean podeEvocarUnidade(ArrayList<Unidade> unidadesEvocadas) {
 		return unidadesEvocadas.size() < QTD_UNIDADES_EVOCADAS;
+	}
+	
+	private boolean verificarAtaqueMontado() {
+		boolean ataqueMontado = false;
+		for (int i = 0; i < unidadesEmCampoAtacante.length && !ataqueMontado; i++) {
+			ataqueMontado = unidadesEmCampoAtacante[i] != null;
+		}
+		return ataqueMontado;
+	}
+	
+	private ArrayList<Unidade> getUnidadesEvocadas(Jogador jogador) {
+		return jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
+	}
+	
+	private Unidade[] getUnidadesEmCampo(Jogador jogador) {
+		return jogador == atacante ? unidadesEmCampoAtacante : unidadesEmCampoDefensor;
 	}
 }

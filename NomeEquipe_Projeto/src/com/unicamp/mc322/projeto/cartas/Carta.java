@@ -9,7 +9,7 @@ public abstract class Carta {
 	private ArrayList<Efeito> efeitos;
 	private int custo;
 	
-	public Carta(int custo, ArrayList<Efeito> efeitos) {
+	protected Carta(int custo, ArrayList<Efeito> efeitos) {
 		this.custo = custo;
 		this.efeitos = efeitos;
 	}

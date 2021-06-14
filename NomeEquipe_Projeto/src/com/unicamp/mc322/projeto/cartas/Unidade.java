@@ -11,7 +11,7 @@ public class Unidade extends Carta {
 	private ModuloVida vida;
 	private ModuloAtaque ataque;
 	
-	public Unidade(int vida, int ataque, int custo, ArrayList<Efeito> efeitos) {
+	protected Unidade(int vida, int ataque, int custo, ArrayList<Efeito> efeitos) {
 		super(custo, efeitos);
 		this.vida = new ModuloVida(vida);
 		this.ataque = new ModuloAtaque(ataque);
