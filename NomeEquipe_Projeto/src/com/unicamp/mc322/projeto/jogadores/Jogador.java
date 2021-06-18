@@ -38,27 +38,32 @@ public abstract class Jogador {
 		return vidaNexus.getVida() > 0;
 	}
 	
-	public Carta evocarCarta(int indexCarta, boolean evocarUnidade) {
+	public Carta evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
+		if (indexCarta < 0 || indexCarta >= mao.size())
+			throw new Exception("Posição de carta na mão inválida. Posição: "+indexCarta+". Quantidade de cartas: "+mao.size());
+			
 		Carta evocada = mao.get(indexCarta);
 		int custo = evocada.getCusto();
 		
-		if (evocada instanceof Unidade && !evocarUnidade) {
-			return null;
-		}
+		if (evocada instanceof Unidade && !evocarUnidade)
+			throw new Exception("Carta do tipo Unidade não pode ser evocada no momento.");
 		
-		return comprarCarta(evocada, custo) ? mao.remove(indexCarta) : null;
+		comprarCarta(evocada, custo);
+		
+		return mao.remove(indexCarta);
 	}
 	
-	public Carta substituirCarta(int indexMao, Carta cartaMesa) {
+	public Carta substituirCarta(int indexMao, Carta cartaMesa) throws Exception {
+		if (indexMao < 0 || indexMao >= mao.size())
+			throw new Exception("Posição de carta na mão inválida. Posição: "+indexMao+". Quantidade de cartas: "+mao.size());
+			
 		Carta evocada = mao.get(indexMao);
 		int custo = Math.max(evocada.getCusto() - cartaMesa.getCusto(), 0);
 		
-		if (comprarCarta(evocada, custo)) {
-			mao.add(cartaMesa);
-			return mao.remove(indexMao);
-		}
+		comprarCarta(evocada, custo);
 		
-		return null;
+		mao.add(cartaMesa);
+		return mao.remove(indexMao);
 	}
 	
 	public void pegarCarta() {
@@ -67,23 +72,30 @@ public abstract class Jogador {
 	
 	public abstract int escolherCartaNaMao(boolean confirmarEscolha);
 	
-	public abstract int escolherUnidadeParaTroca(int quantidadeUnidades);
+	public abstract int escolherUnidadeParaTroca(int limite);
 	
-	public abstract int escolherUnidadeParaCampo(int quantidadeUnidades);
+	public abstract int escolherUnidadeParaCampo(int limite);
 	
-	public abstract int escolherPosicaoDefesa(int quantidadeAtaque);
+	public abstract int escolherPosicaoDefesa(int limite);
 	
-	private boolean comprarCarta(Carta compra, int custo) {
-		if (compra instanceof Feitico && mana.getMana() + manaFeitico.getMana() > custo) {
+	public abstract void exibirMensagemErro(String mensagem);
+	
+	private void comprarCarta(Carta compra, int custo) throws Exception {
+		if (compra instanceof Feitico) {
+			int manaDisponivel = mana.getMana() + manaFeitico.getMana();
+			
+			if (manaDisponivel > custo)
+				throw new Exception("Quantidade de mana insuficiente para ativar carta. Disponível: "+manaDisponivel+". Exigido: "+custo);
+			
 			int feitico = manaFeitico.getMana();
 			manaFeitico.gastarMana(custo);
 			custo -= feitico;
 		}
 		
-		if (mana.getMana() > custo) {
-			mana.gastarMana(custo);
-			return true;
+		if (mana.getMana() < custo) {
+			throw new Exception("Quantidade de mana insuficiente para ativar carta. Disponível: "+mana.getMana()+". Exigido: "+custo);
 		}
-		return false;
+		
+		mana.gastarMana(custo);
 	}
 }

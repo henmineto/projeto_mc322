@@ -14,63 +14,56 @@ public class JogadorHumano extends Jogador {
 	public int escolherCartaNaMao(boolean confirmarEscolha) {
 		final String mensagemConfirmacao = "Deseja evocar uma carta?(S/N): ";
 		final String mensagemPosicao = "Escolha a posicao da carta na mao: ";
-		final int maxIndex = mao.size() - 1;
 		
 		return confirmarEscolha ?
-				interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao, maxIndex) :
-				interagirSemConfirmacao(mensagemPosicao, maxIndex);
+				interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao) :
+				interagirSemConfirmacao(mensagemPosicao);
 	}
 
 	@Override
-	public int escolherUnidadeParaTroca(int quantidadeUnidades) {
+	public int escolherUnidadeParaTroca(int limite) {
 		final String mensagemConfirmacao = "Deseja trocar uma unidade?(S/N): ";
 		final String mensagemPosicao = "Escolha a posicao da unidade evocada: ";
-		final int maxIndex = quantidadeUnidades - 1;
-		
-		return interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao, maxIndex);
+
+		return interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao);
 	}
 
 	@Override
-	public int escolherUnidadeParaCampo(int quantidadeUnidades) {
+	public int escolherUnidadeParaCampo(int limite) {
 		final String mensagemConfirmacao = "Deseja colocar uma unidade em campo?(S/N): ";
 		final String mensagemPosicao = "Escolha a posicao da unidade evocada: ";
-		final int maxIndex = quantidadeUnidades - 1;
 		
-		return interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao, maxIndex);
+		return interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao);
 	}
 
 	@Override
-	public int escolherPosicaoDefesa(int quantidadeAtaque) {
+	public int escolherPosicaoDefesa(int limite) {
 		final String mensagemPosicao = "Escolha a posicao da unidade evocada: ";
-		final int maxIndex = quantidadeAtaque - 1;
 		
-		return interagirSemConfirmacao(mensagemPosicao, maxIndex);
+		return interagirSemConfirmacao(mensagemPosicao);
+	}
+	
+	@Override
+	public void exibirMensagemErro(String mensagem) {
+		System.err.println(mensagem);
 	}
 
-	private int interagirComConfirmacao(String mensagemConfirmacao, String mensagemPosicao, int maxIndex) {
+	private int interagirComConfirmacao(String mensagemConfirmacao, String mensagemPosicao) {
 		int index = -1;
 		boolean desejaEscolher = false;
+
+		System.out.print(mensagemConfirmacao);
+		desejaEscolher = scanner.next().toUpperCase().trim().equals("S");
 		
-		do {
-			System.out.print(mensagemConfirmacao);
-			desejaEscolher = scanner.next().toUpperCase().trim().equals("S");
-			if (desejaEscolher) {
-				System.out.print(mensagemPosicao);
-				index = scanner.nextInt();
-			}
-		} while (desejaEscolher && index < 0 && index > maxIndex);
+		if (desejaEscolher) {
+			index = interagirSemConfirmacao(mensagemPosicao);
+		}
 		
 		return index;
 	}
 	
-	private int interagirSemConfirmacao(String mensagemPosicao, int maxIndex) {
-		int index = -1;
-		
-		do {
-			System.out.print(mensagemPosicao);
-			index = scanner.nextInt();
-		} while (index < 0 && index > maxIndex);
-		
-		return index;
+	private int interagirSemConfirmacao(String mensagemPosicao) {
+		System.out.print(mensagemPosicao);
+		return scanner.nextInt();
 	}
 }
