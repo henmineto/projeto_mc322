@@ -31,6 +31,7 @@ public class Mesa {
 		this.unidadesEvocadasJogador2 = new ArrayList<>(QTD_UNIDADES_EVOCADAS);
 		this.unidadesEmCampoAtacante = new Unidade[QTD_UNIDADES_EVOCADAS];
 		this.unidadesEmCampoDefensor = new Unidade[QTD_UNIDADES_EVOCADAS];
+		MediadorEfeitos.getInstance().setMesa(this);;
 	}
 	
 	public void iniciarRodada() {
@@ -221,7 +222,12 @@ public class Mesa {
 	private void finalizarTurno(Jogador jogador) {
 		ArrayList<Unidade> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
 		for (Unidade unidade : unidadesEvocadasOutroJogador) {
-			unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
+			try {
+				unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
+			}
+			catch (Exception ex) {
+				jogador.exibirMensagemErro(ex.getMessage());
+			}
 		}
 	}
 
@@ -243,7 +249,7 @@ public class Mesa {
 		return unidadesEvocadas.size() < QTD_UNIDADES_EVOCADAS;
 	}
 	
-	private ArrayList<Unidade> getUnidadesEvocadas(Jogador jogador) {
+	ArrayList<Unidade> getUnidadesEvocadas(Jogador jogador) {
 		return jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
 	}
 	

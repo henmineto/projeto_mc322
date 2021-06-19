@@ -78,6 +78,8 @@ public abstract class Jogador {
 	
 	public abstract int escolherPosicaoDefesa(int limite);
 	
+	public abstract int escolherUnidadeParaBonus(int limite);
+	
 	public abstract void exibirMensagemErro(String mensagem);
 	
 	private void comprarCarta(Carta compra, int custo) throws Exception {

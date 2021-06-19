@@ -14,7 +14,7 @@ public abstract class Carta {
 		this.efeitos = efeitos;
 	}
 	
-	public void ativar(AtivacaoEfeito ativacao) {
+	public void ativar(AtivacaoEfeito ativacao) throws Exception {
 		for (Efeito efeito : efeitos) {
 			if (efeito.getAtivacao() == ativacao && !efeito.getUsado()) {
 				efeito.ativar();

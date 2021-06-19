@@ -61,6 +61,13 @@ public class Bot extends Jogador {
 	}
 
 	@Override
+	public int escolherUnidadeParaBonus(int limite) {
+		int index = random.nextInt(limite);
+		System.out.println("Efeito: Bonus para Carta Aliada ativado\r\nBot escolheu bonificar unidade na posição: "+index);
+		return index;
+	}
+	
+	@Override
 	public void exibirMensagemErro(String mensagem) {
 		System.err.println(mensagem);
 	}

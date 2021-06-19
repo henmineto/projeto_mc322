@@ -38,9 +38,12 @@ public class JogadorHumano extends Jogador {
 
 	@Override
 	public int escolherPosicaoDefesa(int limite) {
-		final String mensagemPosicao = "Escolha a posicao da unidade evocada: ";
-		
-		return interagirSemConfirmacao(mensagemPosicao);
+		return interagirSemConfirmacao("Escolha a posicao da unidade evocada: ");
+	}
+	
+	@Override
+	public int escolherUnidadeParaBonus(int limite) {
+		return interagirSemConfirmacao("Efeito: Bonus para Carta Aliada ativado\r\nEscolha a posicao da unidade a ser bonificada: ");
 	}
 	
 	@Override

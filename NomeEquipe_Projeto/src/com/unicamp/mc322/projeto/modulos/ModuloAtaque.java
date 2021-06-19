@@ -10,4 +10,8 @@ public class ModuloAtaque {
 	public int getAtaque() {
 		return ataque;
 	}
+	
+	public void aumentarAtaque(int bonus) {
+		ataque += bonus;
+	}
 }

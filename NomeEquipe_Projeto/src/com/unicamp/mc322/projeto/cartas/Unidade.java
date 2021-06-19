@@ -32,4 +32,12 @@ public class Unidade extends Carta {
 	private void receberDano(int dano) {
 		vida.receberDano(dano);
 	}
+	
+	public void aumentarDano(int bonus) {
+		ataque.aumentarAtaque(bonus);
+	}
+	
+	public void aumentarVida(int bonus) {
+		vida.recuperarVida(bonus);
+	}
 }
