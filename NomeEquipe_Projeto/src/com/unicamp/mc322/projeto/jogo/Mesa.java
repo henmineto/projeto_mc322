@@ -2,9 +2,10 @@ package com.unicamp.mc322.projeto.jogo;
 
 import java.util.ArrayList;
 
+import com.unicamp.mc322.projeto.cartas.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.cartas.Carta;
+import com.unicamp.mc322.projeto.cartas.Seguidor;
 import com.unicamp.mc322.projeto.cartas.Unidade;
-import com.unicamp.mc322.projeto.cartas.efeitos.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public class Mesa {
@@ -118,7 +119,7 @@ public class Mesa {
 	public void realizarCombate() {
 		for (int i = 0; i < unidadesEmCampoAtacante.length; i++) {
 			if (unidadesEmCampoAtacante[i] != null) {
-				if (unidadesEmCampoDefensor[i]!= null) {
+				if (validarDefesa(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
 					unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
 				}
 				else {
@@ -243,6 +244,15 @@ public class Mesa {
 				unidadesEmCampo[i] = null;
 			}
 		}
+	}
+	
+	private boolean validarDefesa(Unidade atacante, Unidade defensor) {
+		if (defensor == null) //nao existe defensor nessa posicao
+			return false;
+		if (!((Seguidor)atacante).isElusivo()) //existe defensor e atacante é um seguidor não elusivo
+			return true;
+		
+		return ((Seguidor)defensor).isElusivo(); //atacante é seguidor elusivo, só defende se defensor for elusivo também.
 	}
 	
 	private boolean podeEvocarUnidade(ArrayList<Unidade> unidadesEvocadas) {

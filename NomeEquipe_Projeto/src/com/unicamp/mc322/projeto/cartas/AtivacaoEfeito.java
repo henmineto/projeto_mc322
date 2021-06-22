@@ -1,4 +1,4 @@
-package com.unicamp.mc322.projeto.cartas.efeitos;
+package com.unicamp.mc322.projeto.cartas;
 
 public enum AtivacaoEfeito {
 	EVOCACAO_DA_CARTA,
