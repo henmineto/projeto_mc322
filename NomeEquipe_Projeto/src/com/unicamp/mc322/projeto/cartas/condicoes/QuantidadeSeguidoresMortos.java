@@ -1,8 +1,9 @@
 package com.unicamp.mc322.projeto.cartas.condicoes;
 
+import com.unicamp.mc322.projeto.cartas.Atacavel;
 import com.unicamp.mc322.projeto.cartas.Campeao;
 import com.unicamp.mc322.projeto.cartas.ModuloCondicao;
-import com.unicamp.mc322.projeto.cartas.Unidade;
+import com.unicamp.mc322.projeto.cartas.Evocavel;
 
 public class QuantidadeSeguidoresMortos extends ModuloCondicao {
 
@@ -11,12 +12,12 @@ public class QuantidadeSeguidoresMortos extends ModuloCondicao {
 	}
 
 	@Override
-	public void contabilizarAtaque(Unidade unidade, int dano) {
-		if (unidade != null && !(unidade instanceof Campeao) && !unidade.estaVivo()) {
+	public void contabilizarAtaque(Atacavel atacavel, int dano) {
+		if (atacavel != null && !(atacavel instanceof Campeao) && !atacavel.estaVivo()) {
 			quantidadeAtingida++;
 		}
 		
-		super.contabilizarAtaque(unidade, dano);
+		super.contabilizarAtaque(atacavel, dano);
 	}
 
 }

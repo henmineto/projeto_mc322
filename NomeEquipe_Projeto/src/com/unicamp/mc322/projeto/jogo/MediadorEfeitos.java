@@ -2,7 +2,7 @@ package com.unicamp.mc322.projeto.jogo;
 
 import java.util.ArrayList;
 
-import com.unicamp.mc322.projeto.cartas.Unidade;
+import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public class MediadorEfeitos {
@@ -22,7 +22,7 @@ public class MediadorEfeitos {
 	}
 	
 	public void darBonusStatusUnidadeAliada(Jogador jogador, int bonusAtaque, int bonusDefesa) {
-		ArrayList<Unidade> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
 		
 		boolean aplicarEfeito = true;
 		
@@ -33,7 +33,7 @@ public class MediadorEfeitos {
 				if (indexUnidade < 0 || indexUnidade >= unidadesEvocadas.size())
 					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesEvocadas.size());
 				
-				Unidade aliada = unidadesEvocadas.get(indexUnidade); 
+				Evocavel aliada = unidadesEvocadas.get(indexUnidade); 
 				aliada.aumentarVida(bonusDefesa);
 				aliada.aumentarDano(bonusAtaque);
 				

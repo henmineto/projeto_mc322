@@ -2,6 +2,8 @@ package com.unicamp.mc322.projeto.cartas;
 
 import java.util.ArrayList;
 
+import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
+
 public abstract class Carta {
 	private ArrayList<Efeito> efeitos;
 	private int custo;

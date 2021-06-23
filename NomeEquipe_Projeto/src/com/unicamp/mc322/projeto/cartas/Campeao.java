@@ -17,15 +17,9 @@ public class Campeao extends Seguidor {
 	}
 	
 	@Override
-	public void atacar(Unidade unidade) {
-		super.atacar(unidade);
-		condicao.contabilizarAtaque(unidade, ataque.getAtaque());
-	}
-	
-	@Override
-	public void atacar(Jogador jogador) {
-		super.atacar(jogador);
-		condicao.contabilizarAtaque(null, ataque.getAtaque());
+	public void atacar(Atacavel atacavel) {
+		super.atacar(atacavel);
+		condicao.contabilizarAtaque(atacavel, ataque.getAtaque());
 	}
 	
 	void evoluir() {

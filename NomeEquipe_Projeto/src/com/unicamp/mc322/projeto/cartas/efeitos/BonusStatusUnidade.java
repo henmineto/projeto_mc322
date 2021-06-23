@@ -1,7 +1,7 @@
 package com.unicamp.mc322.projeto.cartas.efeitos;
 
-import com.unicamp.mc322.projeto.cartas.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.cartas.Efeito;
+import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogo.MediadorEfeitos;
 
 public class BonusStatusUnidade extends Efeito {

@@ -2,10 +2,9 @@ package com.unicamp.mc322.projeto.jogo;
 
 import java.util.ArrayList;
 
-import com.unicamp.mc322.projeto.cartas.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.cartas.Carta;
-import com.unicamp.mc322.projeto.cartas.Seguidor;
-import com.unicamp.mc322.projeto.cartas.Unidade;
+import com.unicamp.mc322.projeto.cartas.Evocavel;
+import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public class Mesa {
@@ -18,11 +17,11 @@ public class Mesa {
 	private Jogador defensor;
 	private int quantidadeRodadas;
 	
-	private ArrayList<Unidade> unidadesEvocadasJogador1;
-	private ArrayList<Unidade> unidadesEvocadasJogador2;
+	private ArrayList<Evocavel> unidadesEvocadasJogador1;
+	private ArrayList<Evocavel> unidadesEvocadasJogador2;
 	
-	private Unidade[] unidadesEmCampoAtacante;
-	private Unidade[] unidadesEmCampoDefensor;
+	private Evocavel[] unidadesEmCampoAtacante;
+	private Evocavel[] unidadesEmCampoDefensor;
 	private int quantidadeCartasAtaque;
 	
 	public Mesa(Jogador jogador1, Jogador jogador2) {
@@ -30,8 +29,8 @@ public class Mesa {
 		this.jogador2 = jogador2;
 		this.unidadesEvocadasJogador1 = new ArrayList<>(QTD_UNIDADES_EVOCADAS);
 		this.unidadesEvocadasJogador2 = new ArrayList<>(QTD_UNIDADES_EVOCADAS);
-		this.unidadesEmCampoAtacante = new Unidade[QTD_UNIDADES_EVOCADAS];
-		this.unidadesEmCampoDefensor = new Unidade[QTD_UNIDADES_EVOCADAS];
+		this.unidadesEmCampoAtacante = new Evocavel[QTD_UNIDADES_EVOCADAS];
+		this.unidadesEmCampoDefensor = new Evocavel[QTD_UNIDADES_EVOCADAS];
 		MediadorEfeitos.getInstance().setMesa(this);;
 	}
 	
@@ -60,7 +59,7 @@ public class Mesa {
 		
 		realizarSubstituicaoCartas(atacante);
 		
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(atacante);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(atacante);
 		
 		boolean montarAtaque = true;
 		while (montarAtaque) {
@@ -90,7 +89,7 @@ public class Mesa {
 		
 		boolean montarDefesa = quantidadeCartasAtaque > 0;
 		
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(defensor);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(defensor);
 		
 		while (montarDefesa) {
 			try {
@@ -154,7 +153,7 @@ public class Mesa {
 	private void realizarSubstituicaoCartas(Jogador jogador) {
 		boolean substituirCarta = true;
 		
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		while (substituirCarta) {
 			try {
@@ -175,37 +174,37 @@ public class Mesa {
 	}
 	
 	private void evocarCarta(Jogador jogador, int indexMao) throws Exception {
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		Carta evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		
 		evocada.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		
-		if(evocada instanceof Unidade) {
-			unidadesEvocadas.add((Unidade)evocada);
+		if(evocada instanceof Evocavel) {
+			unidadesEvocadas.add((Evocavel)evocada);
 		}
 	}
 	
 	private void substituirCarta(Jogador jogador, int indexMao, int indexMesa) throws Exception {
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		if (indexMesa < 0 || indexMesa >= unidadesEvocadas.size())
 			throw new Exception("Posição de carta na mesa inválida. Posição: "+indexMesa+". Quantidade de cartas: "+unidadesEvocadas.size());
 		
-		Carta substituida = unidadesEvocadas.get(indexMesa);
+		Carta substituida = (Carta)unidadesEvocadas.get(indexMesa);
 		Carta substituta = jogador.substituirCarta(indexMao, substituida);
 	
 		substituta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		unidadesEvocadas.remove(indexMesa);
 		
-		if(substituta instanceof Unidade) {
-			unidadesEvocadas.add((Unidade)substituta);
+		if(substituta instanceof Evocavel) {
+			unidadesEvocadas.add((Evocavel)substituta);
 		}
 	}
 	
 	private void colocarCartaEmCampo(Jogador jogador, int indexEvocadas, int indexCampo) throws Exception {
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
-		Unidade[] unidadesEmCampo = getUnidadesEmCampo(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		Evocavel[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		if (indexEvocadas < 0 || indexEvocadas >= unidadesEvocadas.size())
 			throw new Exception("Posição de carta evocada inválida. Posição: "+indexEvocadas+". Quantidade de cartas: "+unidadesEvocadas.size());
@@ -221,10 +220,10 @@ public class Mesa {
 	}
 	
 	private void finalizarTurno(Jogador jogador) {
-		ArrayList<Unidade> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
-		for (Unidade unidade : unidadesEvocadasOutroJogador) {
+		ArrayList<Evocavel> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
+		for (Evocavel unidade : unidadesEvocadasOutroJogador) {
 			try {
-				unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
+				((Carta)unidade).ativar(AtivacaoEfeito.FINAL_DO_TURNO);
 			}
 			catch (Exception ex) {
 				jogador.exibirMensagemErro(ex.getMessage());
@@ -233,8 +232,8 @@ public class Mesa {
 	}
 
 	private void removerCartasEmCampo(Jogador jogador) {
-		ArrayList<Unidade> unidadesEvocadas = getUnidadesEvocadas(jogador);
-		Unidade[] unidadesEmCampo = getUnidadesEmCampo(jogador);
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		Evocavel[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		for (int i = 0; i < unidadesEmCampo.length; i++) {
 			if (unidadesEmCampo[i] != null) {
@@ -246,24 +245,24 @@ public class Mesa {
 		}
 	}
 	
-	private boolean validarDefesa(Unidade atacante, Unidade defensor) {
+	private boolean validarDefesa(Evocavel atacante, Evocavel defensor) {
 		if (defensor == null) //nao existe defensor nessa posicao
 			return false;
-		if (!((Seguidor)atacante).isElusivo()) //existe defensor e atacante é um seguidor não elusivo
+		if (!atacante.isElusivo()) //existe defensor e atacante é um seguidor não elusivo
 			return true;
 		
-		return ((Seguidor)defensor).isElusivo(); //atacante é seguidor elusivo, só defende se defensor for elusivo também.
+		return defensor.isElusivo(); //atacante é seguidor elusivo, só defende se defensor for elusivo também.
 	}
 	
-	private boolean podeEvocarUnidade(ArrayList<Unidade> unidadesEvocadas) {
+	private boolean podeEvocarUnidade(ArrayList<Evocavel> unidadesEvocadas) {
 		return unidadesEvocadas.size() < QTD_UNIDADES_EVOCADAS;
 	}
 	
-	ArrayList<Unidade> getUnidadesEvocadas(Jogador jogador) {
+	ArrayList<Evocavel> getUnidadesEvocadas(Jogador jogador) {
 		return jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
 	}
 	
-	private Unidade[] getUnidadesEmCampo(Jogador jogador) {
+	private Evocavel[] getUnidadesEmCampo(Jogador jogador) {
 		return jogador == atacante ? unidadesEmCampoAtacante : unidadesEmCampoDefensor;
 	}
 }

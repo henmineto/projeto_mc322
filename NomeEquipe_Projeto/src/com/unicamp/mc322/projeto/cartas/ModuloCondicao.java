@@ -13,7 +13,7 @@ public abstract class ModuloCondicao {
 		return quantidadeAtingida >= objetivo;
 	}
 	
-	protected void contabilizarAtaque(Unidade unidade, int dano) {
+	protected void contabilizarAtaque(Atacavel atacavel, int dano) {
 		if (isObjetivoAtingido()) {
 			campeao.evoluir();
 		}

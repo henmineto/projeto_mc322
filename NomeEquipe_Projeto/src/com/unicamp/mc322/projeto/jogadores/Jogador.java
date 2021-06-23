@@ -2,14 +2,15 @@ package com.unicamp.mc322.projeto.jogadores;
 
 import java.util.ArrayList;
 
+import com.unicamp.mc322.projeto.cartas.Atacavel;
 import com.unicamp.mc322.projeto.cartas.Carta;
 import com.unicamp.mc322.projeto.cartas.Feitico;
-import com.unicamp.mc322.projeto.cartas.Unidade;
+import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.decks.Deck;
 import com.unicamp.mc322.projeto.modulos.ModuloMana;
 import com.unicamp.mc322.projeto.modulos.ModuloVida;
 
-public abstract class Jogador {
+public abstract class Jogador implements Atacavel {
 	private final int MAX_MANA_RODADA = 10;
 	private final int MAX_MANA_FEITICO = 3;
 	
@@ -45,7 +46,7 @@ public abstract class Jogador {
 		Carta evocada = mao.get(indexCarta);
 		int custo = evocada.getCusto();
 		
-		if (evocada instanceof Unidade && !evocarUnidade)
+		if (evocada instanceof Evocavel && !evocarUnidade)
 			throw new Exception("Carta do tipo Unidade não pode ser evocada no momento.");
 		
 		comprarCarta(evocada, custo);
