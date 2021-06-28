@@ -11,7 +11,11 @@ public class Seguidor extends Carta implements Evocavel {
 	private ModuloVida vida;
 	protected ModuloAtaque ataque;
 	private ArrayList<Traco> tracos;
+	private int ataquesPorTurno;
 	private boolean elusivo;
+	private boolean furia;
+	private int furiaBonusVida;
+	private int furiaBonusAtaque;
 	
 	public Seguidor(int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos) {
 		super(custo, efeitos);
@@ -20,6 +24,8 @@ public class Seguidor extends Carta implements Evocavel {
 		for(Traco traco : tracos) {
 			adicionarTraco(traco);
 		}
+
+		ataquesPorTurno = 1;
 	}
 	
 	public void adicionarTraco(Traco traco) {
@@ -37,6 +43,28 @@ public class Seguidor extends Carta implements Evocavel {
 	
 	public boolean isElusivo() {
 		return elusivo;
+	}
+
+	public void setAtaqueDuplo() { ataquesPorTurno = 2; }
+
+	public int getAtaquesPorTurno() { return ataquesPorTurno; }
+
+	public void setFuria(int bonusVida, int bonusAtaque) {
+		this.furia = true;
+
+		furiaBonusVida = bonusVida;
+		furiaBonusAtaque = bonusAtaque;
+	}
+
+	public boolean isFuria() {
+		return furia;
+	}
+
+	public void receberBonusFuria() {
+		if (furia) {
+			aumentarDano(furiaBonusAtaque);
+			aumentarVida(furiaBonusVida);
+		}
 	}
 	
 	public void atacar(Atacavel atacavel) {

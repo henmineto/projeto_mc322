@@ -99,7 +99,7 @@ public class Mesa {
 					int indexDefesa = defensor.escolherPosicaoDefesa(quantidadeCartasAtaque);
 					
 					if (indexDefesa >= quantidadeCartasAtaque)
-						throw new Exception("Não há carta de ataque na posição escolhida para defesa. Posição: "+indexDefesa);
+						throw new Exception("Nï¿½o hï¿½ carta de ataque na posiï¿½ï¿½o escolhida para defesa. Posiï¿½ï¿½o: "+indexDefesa);
 					
 					colocarCartaEmCampo(atacante, indexMesa, indexDefesa);
 					indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size());
@@ -118,11 +118,25 @@ public class Mesa {
 	public void realizarCombate() {
 		for (int i = 0; i < unidadesEmCampoAtacante.length; i++) {
 			if (unidadesEmCampoAtacante[i] != null) {
-				if (validarDefesa(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
-					unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
-				}
-				else {
-					unidadesEmCampoAtacante[i].atacar(defensor);
+				for (int j = 0; j < unidadesEmCampoAtacante[i].getAtaquesPorTurno(); j++) {
+					if (validarDefesa(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
+						unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
+						if (!unidadesEmCampoDefensor[i].estaVivo()) {
+							unidadesEmCampoDefensor[i] = null;
+
+							if (unidadesEmCampoAtacante[i].isFuria()) {
+								unidadesEmCampoAtacante[i].receberBonusFuria();
+							}
+						}
+					}
+					else {
+						unidadesEmCampoAtacante[i].atacar(defensor);
+					}
+
+					if (!unidadesEmCampoAtacante[i].estaVivo()) {
+						unidadesEmCampoAtacante[i] = null;
+						break;
+					}
 				}
 			}
 		}
@@ -189,7 +203,7 @@ public class Mesa {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		if (indexMesa < 0 || indexMesa >= unidadesEvocadas.size())
-			throw new Exception("Posição de carta na mesa inválida. Posição: "+indexMesa+". Quantidade de cartas: "+unidadesEvocadas.size());
+			throw new Exception("Posiï¿½ï¿½o de carta na mesa invï¿½lida. Posiï¿½ï¿½o: "+indexMesa+". Quantidade de cartas: "+unidadesEvocadas.size());
 		
 		Carta substituida = (Carta)unidadesEvocadas.get(indexMesa);
 		Carta substituta = jogador.substituirCarta(indexMao, substituida);
@@ -207,10 +221,10 @@ public class Mesa {
 		Evocavel[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		if (indexEvocadas < 0 || indexEvocadas >= unidadesEvocadas.size())
-			throw new Exception("Posição de carta evocada inválida. Posição: "+indexEvocadas+". Quantidade de cartas: "+unidadesEvocadas.size());
+			throw new Exception("Posiï¿½ï¿½o de carta evocada invï¿½lida. Posiï¿½ï¿½o: "+indexEvocadas+". Quantidade de cartas: "+unidadesEvocadas.size());
 		
 		if (indexCampo < 0 || indexCampo >= unidadesEmCampo.length)
-			throw new Exception("Posição do campo inválida. Posição: "+indexCampo+". Quantidade de posições: "+unidadesEmCampo.length);
+			throw new Exception("Posiï¿½ï¿½o do campo invï¿½lida. Posiï¿½ï¿½o: "+indexCampo+". Quantidade de posiï¿½ï¿½es: "+unidadesEmCampo.length);
 		
 		if (unidadesEmCampo[indexCampo] != null) {
 			unidadesEvocadas.add(unidadesEmCampo[indexCampo]);
@@ -248,10 +262,10 @@ public class Mesa {
 	private boolean validarDefesa(Evocavel atacante, Evocavel defensor) {
 		if (defensor == null) //nao existe defensor nessa posicao
 			return false;
-		if (!atacante.isElusivo()) //existe defensor e atacante é um seguidor não elusivo
+		if (!atacante.isElusivo()) //existe defensor e atacante ï¿½ um seguidor nï¿½o elusivo
 			return true;
 		
-		return defensor.isElusivo(); //atacante é seguidor elusivo, só defende se defensor for elusivo também.
+		return defensor.isElusivo(); //atacante ï¿½ seguidor elusivo, sï¿½ defende se defensor for elusivo tambï¿½m.
 	}
 	
 	private boolean podeEvocarUnidade(ArrayList<Evocavel> unidadesEvocadas) {
