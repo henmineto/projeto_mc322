@@ -13,5 +13,5 @@ public abstract class Traco {
 		return ativacao;
 	}
 	
-	protected abstract void ativar(Seguidor seguidor);
+	protected abstract void ativar(Evocavel evocavel);
 }

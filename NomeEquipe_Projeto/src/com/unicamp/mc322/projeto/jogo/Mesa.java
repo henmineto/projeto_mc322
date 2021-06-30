@@ -2,7 +2,7 @@ package com.unicamp.mc322.projeto.jogo;
 
 import java.util.ArrayList;
 
-import com.unicamp.mc322.projeto.cartas.Carta;
+import com.unicamp.mc322.projeto.cartas.Compravel;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
@@ -190,7 +190,7 @@ public class Mesa {
 	private void evocarCarta(Jogador jogador, int indexMao) throws Exception {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
-		Carta evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
+		Evocavel evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		
 		evocada.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		
@@ -205,8 +205,8 @@ public class Mesa {
 		if (indexMesa < 0 || indexMesa >= unidadesEvocadas.size())
 			throw new Exception("Posi��o de carta na mesa inv�lida. Posi��o: "+indexMesa+". Quantidade de cartas: "+unidadesEvocadas.size());
 		
-		Carta substituida = (Carta)unidadesEvocadas.get(indexMesa);
-		Carta substituta = jogador.substituirCarta(indexMao, substituida);
+		Evocavel substituida = unidadesEvocadas.get(indexMesa);
+		Compravel substituta = jogador.substituirCarta(indexMao, substituida);
 	
 		substituta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		unidadesEvocadas.remove(indexMesa);
@@ -237,7 +237,7 @@ public class Mesa {
 		ArrayList<Evocavel> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
 		for (Evocavel unidade : unidadesEvocadasOutroJogador) {
 			try {
-				((Carta)unidade).ativar(AtivacaoEfeito.FINAL_DO_TURNO);
+				unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
 			}
 			catch (Exception ex) {
 				jogador.exibirMensagemErro(ex.getMessage());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.unicamp.mc322.projeto.cartas.Atacavel;
 import com.unicamp.mc322.projeto.cartas.Carta;
+import com.unicamp.mc322.projeto.cartas.Compravel;
 import com.unicamp.mc322.projeto.cartas.Feitico;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.decks.Deck;
@@ -14,7 +15,7 @@ public abstract class Jogador implements Atacavel {
 	private final int MAX_MANA_RODADA = 10;
 	private final int MAX_MANA_FEITICO = 3;
 	
-	protected ArrayList<Carta> mao;
+	protected ArrayList<Compravel> mao;
 	private Deck deck;
 	private ModuloMana mana;
 	private ModuloMana manaFeitico;
@@ -39,11 +40,11 @@ public abstract class Jogador implements Atacavel {
 		return vidaNexus.getVida() > 0;
 	}
 	
-	public Carta evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
+	public Evocavel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
 		if (indexCarta < 0 || indexCarta >= mao.size())
 			throw new Exception("Posição de carta na mão inválida. Posição: "+indexCarta+". Quantidade de cartas: "+mao.size());
 			
-		Carta evocada = mao.get(indexCarta);
+		Compravel evocada = mao.get(indexCarta);
 		int custo = evocada.getCusto();
 		
 		if (evocada instanceof Evocavel && !evocarUnidade)
@@ -51,14 +52,14 @@ public abstract class Jogador implements Atacavel {
 		
 		comprarCarta(evocada, custo);
 		
-		return mao.remove(indexCarta);
+		return (Evocavel)mao.remove(indexCarta);
 	}
 	
-	public Carta substituirCarta(int indexMao, Carta cartaMesa) throws Exception {
+	public Compravel substituirCarta(int indexMao, Evocavel cartaMesa) throws Exception {
 		if (indexMao < 0 || indexMao >= mao.size())
 			throw new Exception("Posição de carta na mão inválida. Posição: "+indexMao+". Quantidade de cartas: "+mao.size());
 			
-		Carta evocada = mao.get(indexMao);
+		Compravel evocada = mao.get(indexMao);
 		int custo = Math.max(evocada.getCusto() - cartaMesa.getCusto(), 0);
 		
 		comprarCarta(evocada, custo);
@@ -83,7 +84,7 @@ public abstract class Jogador implements Atacavel {
 	
 	public abstract void exibirMensagemErro(String mensagem);
 	
-	private void comprarCarta(Carta compra, int custo) throws Exception {
+	private void comprarCarta(Compravel compra, int custo) throws Exception {
 		if (compra instanceof Feitico) {
 			int manaDisponivel = mana.getMana() + manaFeitico.getMana();
 			

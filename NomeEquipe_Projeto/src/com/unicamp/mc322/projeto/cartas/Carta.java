@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 
-public abstract class Carta {
+public abstract class Carta implements Compravel {
 	private ArrayList<Efeito> efeitos;
 	private int custo;
 	

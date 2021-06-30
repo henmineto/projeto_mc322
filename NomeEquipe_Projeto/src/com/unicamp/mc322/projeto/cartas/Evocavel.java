@@ -1,6 +1,6 @@
 package com.unicamp.mc322.projeto.cartas;
 
-public interface Evocavel extends Atacavel {
+public interface Evocavel extends Atacavel, Compravel {
 	void adicionarTraco(Traco traco);
 	
 	boolean isElusivo();
@@ -10,4 +10,16 @@ public interface Evocavel extends Atacavel {
 	void aumentarDano(int bonus);
 	
 	void aumentarVida(int bonus);
+	
+	void setAtaqueDuplo();
+	
+	int getAtaquesPorTurno();
+	
+	void setFuria(int bonusVida, int bonusAtaque);
+	
+	boolean isFuria();
+	
+	void receberBonusFuria();
+	
+	void setElusivo();
 }
