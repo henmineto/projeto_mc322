@@ -12,11 +12,19 @@ public abstract class ModuloCondicao {
 	protected boolean isObjetivoAtingido() {
 		return quantidadeAtingida >= objetivo;
 	}
-	
-	protected void contabilizarAtaque(Atacavel atacavel, int dano) {
+
+	private void tentarEvoluir() {
 		if (isObjetivoAtingido()) {
 			campeao.evoluir();
 		}
+	}
+
+	protected void contabilizarAtaque(Atacavel atacavel, int dano) {
+		tentarEvoluir();
+	}
+
+	protected void contabilizarDanoSofrido(int danoSofrido) {
+		tentarEvoluir();
 	}
 	
 	void setCampeao(Campeao campeao) {

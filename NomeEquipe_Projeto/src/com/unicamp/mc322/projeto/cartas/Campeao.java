@@ -21,6 +21,12 @@ public class Campeao extends Seguidor {
 		super.atacar(atacavel);
 		condicao.contabilizarAtaque(atacavel, ataque.getAtaque());
 	}
+
+	@Override
+	public void receberDano(int dano) {
+		condicao.contabilizarDanoSofrido(Math.min(vida.getVida(), dano));
+		super.receberDano(dano);
+	}
 	
 	void evoluir() {
 		if (evolucao != null) {

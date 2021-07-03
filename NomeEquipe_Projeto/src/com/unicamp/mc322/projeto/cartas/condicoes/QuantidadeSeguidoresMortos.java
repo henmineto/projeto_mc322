@@ -20,4 +20,9 @@ public class QuantidadeSeguidoresMortos extends ModuloCondicao {
 		super.contabilizarAtaque(atacavel, dano);
 	}
 
+	@Override
+	protected void contabilizarDanoSofrido(int danoSofrido) {
+
+	}
+
 }
