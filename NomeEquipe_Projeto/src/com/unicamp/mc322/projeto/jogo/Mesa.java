@@ -31,7 +31,12 @@ public class Mesa {
 		this.unidadesEvocadasJogador2 = new ArrayList<>(QTD_UNIDADES_EVOCADAS);
 		this.unidadesEmCampoAtacante = new Evocavel[QTD_UNIDADES_EVOCADAS];
 		this.unidadesEmCampoDefensor = new Evocavel[QTD_UNIDADES_EVOCADAS];
-		MediadorEfeitos.getInstance().setMesa(this);;
+		MediadorEfeitos.getInstance().setMesa(this);
+		
+		for (int i = 0; i < 4; i++) {
+			this.jogador1.pegarCarta();
+			this.jogador2.pegarCarta();
+		}
 	}
 	
 	public void iniciarRodada() {
@@ -46,6 +51,13 @@ public class Mesa {
 			defensor = jogador1;
 		}
 		
+		if (quantidadeRodadas == 1) {
+			for (int i = 0; i < 3; i++) {
+				jogador1.pegarCarta();
+				jogador2.pegarCarta();
+			}
+		}
+		
 		jogador1.pegarCarta();
 		jogador2.pegarCarta();
 		
@@ -55,9 +67,11 @@ public class Mesa {
 	
 	public void realizarTurnoAtacante() {
 		
-		realizarEvocacaoCartas(atacante);
+		// substitui 0-4 cartas na 1ª rodada
+		if (quantidadeRodadas == 1)
+			realizarSubstituicaoCartas(atacante);
 		
-		realizarSubstituicaoCartas(atacante);
+		realizarEvocacaoCartas(atacante);
 		
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(atacante);
 		
@@ -83,9 +97,12 @@ public class Mesa {
 	}
 	
 	public void realizarTurnoDefensor() {
-		realizarEvocacaoCartas(defensor);
 		
-		realizarSubstituicaoCartas(defensor);
+		// substitui 0-4 cartas na 1ª rodada
+		if (quantidadeRodadas == 1)
+			realizarSubstituicaoCartas(defensor);
+		
+		realizarEvocacaoCartas(defensor);
 		
 		boolean montarDefesa = quantidadeCartasAtaque > 0;
 		
@@ -165,37 +182,29 @@ public class Mesa {
 	}
 	
 	private void realizarSubstituicaoCartas(Jogador jogador) {
-		boolean substituirCarta = true;
+		boolean descartarCarta = true;
 		
-		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
+		int numDescartes = jogador.escolherDescartes(descartarCarta);
+		int numDescartesEfetivos = 0;
 		
-		while (substituirCarta) {
-			try {
-				int indexMesa = jogador.escolherUnidadeParaTroca(unidadesEvocadas.size());
-				
-				while (indexMesa >= 0) {
-					int indexMao = jogador.escolherCartaNaMao(false);
-					substituirCarta(jogador, indexMao, indexMesa);
-					indexMesa = jogador.escolherUnidadeParaTroca(unidadesEvocadas.size());
-				}
-				
-				substituirCarta = false;
-			}
-			catch (Exception ex) {
-				jogador.exibirMensagemErro(ex.getMessage());
-			}
+		for (int i = 0; i < numDescartes; i++) {
+			if (jogador.descartaCarta())
+				numDescartesEfetivos++;
+		}
+		for (int j = 0; j < numDescartesEfetivos; j++) {
+			jogador.pegarCarta();
 		}
 	}
 	
 	private void evocarCarta(Jogador jogador, int indexMao) throws Exception {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
-		Evocavel evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
+		Compravel carta = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		
-		evocada.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
+		carta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		
-		if(evocada instanceof Evocavel) {
-			unidadesEvocadas.add((Evocavel)evocada);
+		if(carta instanceof Evocavel) {
+			unidadesEvocadas.add((Evocavel)carta);
 		}
 	}
 	

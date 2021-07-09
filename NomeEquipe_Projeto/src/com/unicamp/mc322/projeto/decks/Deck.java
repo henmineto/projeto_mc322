@@ -6,7 +6,11 @@ import java.util.Random;
 import com.unicamp.mc322.projeto.cartas.Carta;
 
 public abstract class Deck {
-	private ArrayList<Carta> cartas;
+	protected ArrayList<Carta> cartas;
+	
+	protected Deck() {
+		cartas = new ArrayList<>();
+	}
 	
 	public Carta pegarCarta() {
 		int indexAleatorio = new Random().nextInt(cartas.size());

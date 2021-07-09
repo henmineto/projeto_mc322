@@ -7,12 +7,12 @@ import com.unicamp.mc322.projeto.jogadores.Jogador;
 public class Campeao extends Seguidor {
 	
 	private ModuloCondicao condicao;
-	private ModuloEvolucao evolucao;
+	private ArrayList<ModuloEvolucao> evolucoes;
 	private boolean nivelSuperior;
 
-	public Campeao(int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos, ModuloCondicao condicao, ModuloEvolucao evolucao) {
-		super(vida, ataque, custo, efeitos, tracos);
-		setEvolucao(evolucao);
+	public Campeao(String nome, int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos, ModuloCondicao condicao, ArrayList<ModuloEvolucao> evolucoes) {
+		super(nome, vida, ataque, custo, efeitos, tracos);
+		setEvolucao(evolucoes);
 		setCondicao(condicao);
 	}
 	
@@ -29,9 +29,11 @@ public class Campeao extends Seguidor {
 	}
 	
 	void evoluir() {
-		if (evolucao != null) {
-			evolucao.evoluir();
+		if (evolucoes != null) {
 			nivelSuperior = true;
+			for (ModuloEvolucao evolucao : evolucoes) {
+				evolucao.evoluir();
+			}
 		}
 	}
 	
@@ -43,11 +45,13 @@ public class Campeao extends Seguidor {
 		}
 	}
 	
-	private void setEvolucao(ModuloEvolucao evolucao) {
-		this.evolucao = evolucao;
+	private void setEvolucao(ArrayList<ModuloEvolucao> evolucoes) {
+		this.evolucoes = evolucoes;
 		
-		if (this.evolucao != null) {
-			this.evolucao.setCampeao(this);
+		if (this.evolucoes != null) {
+			for (ModuloEvolucao evolucao : evolucoes) {
+				evolucao.setCampeao(this);
+			}
 		}
 	}
 }
