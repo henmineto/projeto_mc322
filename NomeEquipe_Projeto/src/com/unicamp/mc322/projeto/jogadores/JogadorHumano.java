@@ -12,12 +12,22 @@ public class JogadorHumano extends Jogador {
 	
 	@Override
 	public int escolherCartaNaMao(boolean confirmarEscolha) {
-		final String mensagemConfirmacao = "Deseja evocar uma carta?(S/N): ";
+		final String mensagemConfirmacao = "Deseja escolher uma carta?(S/N): "; // generaliza para o caso onde o jogador não irá evocar uma carta
 		final String mensagemPosicao = "Escolha a posicao da carta na mao: ";
 		
 		return confirmarEscolha ?
 				interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao) :
 				interagirSemConfirmacao(mensagemPosicao);
+	}
+	
+	@Override
+	public int escolherDescartes(boolean confirmarEscolha) {
+		final String mensagemConfirmacao = "Deseja descartar cartas?(S/N): ";
+		final String mensagemQuantidade = "Deseja descartar quantas cartas?";
+		
+		return confirmarEscolha ?
+				interagirComConfirmacao(mensagemConfirmacao, mensagemQuantidade) :
+				interagirSemConfirmacao(mensagemQuantidade);
 	}
 
 	@Override
@@ -69,4 +79,5 @@ public class JogadorHumano extends Jogador {
 		System.out.print(mensagemPosicao);
 		return scanner.nextInt();
 	}
+
 }
