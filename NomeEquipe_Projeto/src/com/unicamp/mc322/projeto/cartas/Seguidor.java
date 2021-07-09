@@ -17,10 +17,11 @@ public class Seguidor extends Carta implements Evocavel {
 	private int furiaBonusVida;
 	private int furiaBonusAtaque;
 	
-	public Seguidor(int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos) {
-		super(custo, efeitos);
+	public Seguidor(String nome, int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos) {
+		super(nome, custo, efeitos);
 		this.vida = new ModuloVida(vida);
 		this.ataque = new ModuloAtaque(ataque);
+		this.tracos = new ArrayList<Traco>();
 		for(Traco traco : tracos) {
 			adicionarTraco(traco);
 		}

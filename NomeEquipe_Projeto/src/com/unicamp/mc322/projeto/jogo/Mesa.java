@@ -9,7 +9,6 @@ import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public class Mesa {
 	private final int QTD_UNIDADES_EVOCADAS = 6;
-	private final int QTD_CARTAS_SUBSTITUIVEIS = 4;
 
 	private Jogador jogador1;
 	private Jogador jogador2;
@@ -32,7 +31,12 @@ public class Mesa {
 		this.unidadesEvocadasJogador2 = new ArrayList<>(QTD_UNIDADES_EVOCADAS);
 		this.unidadesEmCampoAtacante = new Evocavel[QTD_UNIDADES_EVOCADAS];
 		this.unidadesEmCampoDefensor = new Evocavel[QTD_UNIDADES_EVOCADAS];
-		MediadorEfeitos.getInstance().setMesa(this);;
+		MediadorEfeitos.getInstance().setMesa(this);
+		
+		for (int i = 0; i < 4; i++) {
+			this.jogador1.pegarCarta();
+			this.jogador2.pegarCarta();
+		}
 	}
 	
 	public void iniciarRodada() {
@@ -195,12 +199,12 @@ public class Mesa {
 	private void evocarCarta(Jogador jogador, int indexMao) throws Exception {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
-		Evocavel evocada = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
+		Compravel carta = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		
-		evocada.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
+		carta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		
-		if(evocada instanceof Evocavel) {
-			unidadesEvocadas.add((Evocavel)evocada);
+		if(carta instanceof Evocavel) {
+			unidadesEvocadas.add((Evocavel)carta);
 		}
 	}
 	

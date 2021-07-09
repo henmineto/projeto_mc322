@@ -8,6 +8,7 @@ import com.unicamp.mc322.projeto.cartas.Compravel;
 import com.unicamp.mc322.projeto.cartas.Feitico;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.decks.Deck;
+import com.unicamp.mc322.projeto.decks.DeckFactory;
 import com.unicamp.mc322.projeto.modulos.ModuloMana;
 import com.unicamp.mc322.projeto.modulos.ModuloVida;
 
@@ -21,10 +22,12 @@ public abstract class Jogador implements Atacavel {
 	private ModuloMana manaFeitico;
 	private ModuloVida vidaNexus;
 	
-	protected Jogador(int vida) {
+	protected Jogador(int vida, DeckFactory deckFactory) {
 		this.mana = new ModuloMana(MAX_MANA_RODADA);
 		this.manaFeitico = new ModuloMana(MAX_MANA_FEITICO);
 		this.vidaNexus = new ModuloVida(vida);
+		this.mao = new ArrayList<Compravel>();
+		this.deck = deckFactory.gerarDeck();
 	}
 	
 	public void resetarMana(int numeroRodada) {
@@ -40,7 +43,7 @@ public abstract class Jogador implements Atacavel {
 		return vidaNexus.getVida() > 0;
 	}
 	
-	public Evocavel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
+	public Compravel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
 		if (indexCarta < 0 || indexCarta >= mao.size())
 			throw new Exception("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
 			
@@ -52,7 +55,7 @@ public abstract class Jogador implements Atacavel {
 		
 		comprarCarta(evocada, custo);
 		
-		return (Evocavel)mao.remove(indexCarta);
+		return mao.remove(indexCarta);
 	}
 	
 	public Compravel substituirCarta(int indexMao, Evocavel cartaMesa) throws Exception {

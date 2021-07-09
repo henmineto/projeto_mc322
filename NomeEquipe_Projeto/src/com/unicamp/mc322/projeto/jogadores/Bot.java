@@ -2,12 +2,14 @@ package com.unicamp.mc322.projeto.jogadores;
 
 import java.util.Random;
 
+import com.unicamp.mc322.projeto.decks.DeckFactory;
+
 public class Bot extends Jogador {
 	
 	private Random random;
 	
-	public Bot(int vida) {
-		super(vida);
+	public Bot(int vida, DeckFactory deckFactory) {
+		super(vida, deckFactory);
 		this.random = new Random();
 	}
 

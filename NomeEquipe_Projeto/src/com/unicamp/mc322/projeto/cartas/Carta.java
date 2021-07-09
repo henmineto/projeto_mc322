@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 
 public abstract class Carta implements Compravel {
-	private ArrayList<Efeito> efeitos;
+	private String nome;
 	private int custo;
+	private ArrayList<Efeito> efeitos;
 	
-	protected Carta(int custo, ArrayList<Efeito> efeitos) {
+	protected Carta(String nome, int custo, ArrayList<Efeito> efeitos) {
 		this.custo = custo;
 		this.efeitos = efeitos;
 	}

@@ -2,11 +2,13 @@ package com.unicamp.mc322.projeto.jogadores;
 
 import java.util.Scanner;
 
+import com.unicamp.mc322.projeto.decks.DeckFactory;
+
 public class JogadorHumano extends Jogador {
 	private Scanner scanner;
 	
-	public JogadorHumano(int vida) {
-		super(vida);
+	public JogadorHumano(int vida, DeckFactory deckFactory) {
+		super(vida, deckFactory);
 		this.scanner = new Scanner(System.in);
 	}
 	
