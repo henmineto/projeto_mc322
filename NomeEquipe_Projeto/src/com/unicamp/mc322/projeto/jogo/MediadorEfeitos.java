@@ -22,26 +22,10 @@ public class MediadorEfeitos {
 	}
 	
 	public void darBonusStatusUnidadeAliada(Jogador jogador, int bonusAtaque, int bonusDefesa) {
-		ArrayList<Evocavel> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
-		
-		boolean aplicarEfeito = true;
-		
-		while(aplicarEfeito) {
-			try {
-				int indexUnidade = jogador.escolherUnidadeParaBonus(unidadesEvocadas.size());
-				
-				if (indexUnidade < 0 || indexUnidade >= unidadesEvocadas.size())
-					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesEvocadas.size());
-				
-				Evocavel aliada = unidadesEvocadas.get(indexUnidade); 
-				aliada.aumentarVida(bonusDefesa);
-				aliada.aumentarDano(bonusAtaque);
-				
-				aplicarEfeito = false;
-			}
-			catch (Exception ex) {
-				jogador.exibirMensagemErro(ex.getMessage());
-			}
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+		if (aliada != null) { 
+			aliada.aumentarVida(bonusDefesa);
+			aliada.aumentarDano(bonusAtaque);
 		}
 	}
 	
@@ -54,7 +38,37 @@ public class MediadorEfeitos {
 		}
 	}
 	
+	public void dobrarAtaqueDefesaUnidadeAliada(Jogador jogador) {
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+		if (aliada != null) {
+			aliada.aumentarVida(aliada.getVida());
+			aliada.aumentarDano(aliada.getAtaque());		
+		}
+	}
+	
 	public void darBonusCartaDestruicao(Jogador jogador) {
 		jogador.pegarCarta();
+	}
+	
+	private Evocavel escolherCartaParaBonus(Jogador jogador) {
+		ArrayList<Evocavel> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
+		
+		boolean aplicarEfeito = true;
+		
+		while(aplicarEfeito) {
+			try {
+				int indexUnidade = jogador.escolherUnidadeParaBonus(unidadesEvocadas.size());
+				
+				if (indexUnidade < 0 || indexUnidade >= unidadesEvocadas.size())
+					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesEvocadas.size());
+				
+				return unidadesEvocadas.get(indexUnidade); 
+			}
+			catch (Exception ex) {
+				jogador.exibirMensagemErro(ex.getMessage());
+			}
+		}
+		
+		return null;
 	}
 }

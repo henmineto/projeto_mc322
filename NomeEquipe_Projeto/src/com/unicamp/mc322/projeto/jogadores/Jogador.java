@@ -3,7 +3,6 @@ package com.unicamp.mc322.projeto.jogadores;
 import java.util.ArrayList;
 
 import com.unicamp.mc322.projeto.cartas.Atacavel;
-import com.unicamp.mc322.projeto.cartas.Carta;
 import com.unicamp.mc322.projeto.cartas.Compravel;
 import com.unicamp.mc322.projeto.cartas.Feitico;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
@@ -41,6 +40,10 @@ public abstract class Jogador implements Atacavel {
 	
 	public int getAtaque() {
 		return 0;
+	}
+	
+	public int getVida() {
+		return vidaNexus.getVida();
 	}
 	
 	public boolean estaVivo() {

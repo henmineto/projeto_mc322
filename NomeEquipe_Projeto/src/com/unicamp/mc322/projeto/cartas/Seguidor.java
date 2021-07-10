@@ -77,6 +77,10 @@ public class Seguidor extends Carta implements Evocavel {
 		return vida.getVida() > 0;
 	}
 	
+	public int getVida() {
+		return vida.getVida();
+	}
+	
 	public void receberDano(int dano) {
 		vida.receberDano(dano);
 	}
