@@ -8,7 +8,7 @@ import com.unicamp.mc322.projeto.modulos.ModuloVida;
 
 public class Seguidor extends Carta implements Evocavel {
 
-	private ModuloVida vida;
+	protected ModuloVida vida;
 	protected ModuloAtaque ataque;
 	private ArrayList<Traco> tracos;
 	private int ataquesPorTurno;
