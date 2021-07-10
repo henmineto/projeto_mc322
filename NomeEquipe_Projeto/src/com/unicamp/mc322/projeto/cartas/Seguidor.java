@@ -70,6 +70,7 @@ public class Seguidor extends Carta implements Evocavel {
 	
 	public void atacar(Atacavel atacavel) {
 		atacavel.receberDano(ataque.getAtaque());
+		receberDano(atacavel.getAtaque());
 	}
 	
 	public boolean estaVivo() {
@@ -78,6 +79,10 @@ public class Seguidor extends Carta implements Evocavel {
 	
 	public void receberDano(int dano) {
 		vida.receberDano(dano);
+	}
+	
+	public int getAtaque() {
+		return ataque.getAtaque()
 	}
 	
 	public void aumentarDano(int bonus) {
