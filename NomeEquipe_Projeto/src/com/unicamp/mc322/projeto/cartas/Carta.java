@@ -11,6 +11,7 @@ public abstract class Carta implements Compravel {
 	private ArrayList<Efeito> efeitos;
 	
 	protected Carta(String nome, int custo, ArrayList<Efeito> efeitos) {
+		this.nome = nome;
 		this.custo = custo;
 		this.efeitos = efeitos;
 	}
