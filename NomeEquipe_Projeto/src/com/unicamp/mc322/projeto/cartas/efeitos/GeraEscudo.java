@@ -1,7 +1,10 @@
 package com.unicamp.mc322.projeto.cartas.efeitos;
 
+import com.unicamp.mc322.projeto.cartas.Ativavel;
 import com.unicamp.mc322.projeto.cartas.Efeito;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
+import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.MediadorEfeitos;
 
 public class GeraEscudo extends Efeito {
 

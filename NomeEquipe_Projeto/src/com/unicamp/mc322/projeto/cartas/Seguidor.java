@@ -2,7 +2,9 @@ package com.unicamp.mc322.projeto.cartas;
 
 import java.util.ArrayList;
 
+import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoTraco;
+import com.unicamp.mc322.projeto.jogadores.Jogador;
 import com.unicamp.mc322.projeto.modulos.ModuloAtaque;
 import com.unicamp.mc322.projeto.modulos.ModuloVida;
 

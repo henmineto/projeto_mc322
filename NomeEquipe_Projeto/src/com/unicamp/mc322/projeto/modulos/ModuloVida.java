@@ -1,7 +1,7 @@
 package com.unicamp.mc322.projeto.modulos;
 
 public class ModuloVida {
-	private int vidaMaxima
+	private int vidaMaxima;
 	private int vida;
 	private int ultimoDanoSofrido;
 	private boolean temEscudo;
