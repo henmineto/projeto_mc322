@@ -20,7 +20,7 @@ public class QuantidadeDanoIncrementado extends ModuloCondicao {
     protected void contabilizarDanoSofrido(int danoSofrido) {
         quantidadeAtingida += danoSofrido;
 
-        super.contabilizarDanoSofrido();
+        super.contabilizarDanoSofrido(quantidadeAtingida);
     }
 
 }
