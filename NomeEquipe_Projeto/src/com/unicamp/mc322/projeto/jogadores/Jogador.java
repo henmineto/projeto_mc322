@@ -75,6 +75,10 @@ public abstract class Jogador implements Atacavel {
 		
 		return mao.remove(indexMao);
 	}
+
+	public void receberCarta(Compravel carta) {
+		mao.add(carta);
+	}
 	
 	public void pegarCarta() {
 		mao.add(deck.pegarCarta());

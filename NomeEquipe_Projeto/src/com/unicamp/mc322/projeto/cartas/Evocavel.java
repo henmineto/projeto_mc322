@@ -28,4 +28,6 @@ public interface Evocavel extends Atacavel, Compravel {
 	void garantirEscudo();
 
 	void zerarAtaque();
+
+	void verificarMatouNesseTurno();
 }

@@ -49,6 +49,10 @@ public class MediadorEfeitos {
 	public void darBonusCartaDestruicao(Jogador jogador) {
 		jogador.pegarCarta();
 	}
+
+	public void darBonusUnidadeAoMatar(Jogador jogador, Evocavel unidadeBonus) {
+		jogador.receberCarta(unidadeBonus);
+	}
 	
 	public void atacarNexusInimigo(Jogador jogador) {
 		Evocavel aliada = escolherCartaParaBonus(jogador);
