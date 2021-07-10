@@ -13,7 +13,10 @@ public abstract class Deck {
 	}
 	
 	public Carta pegarCarta() {
-		int indexAleatorio = new Random().nextInt(cartas.size());
-		return cartas.remove(indexAleatorio);
+		if ((cartas.size()) > 0) {
+			int indexAleatorio = new Random().nextInt(cartas.size());
+			return cartas.remove(indexAleatorio);
+		}
+		return null;
 	}
 }
