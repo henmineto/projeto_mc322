@@ -59,6 +59,11 @@ public class JogadorHumano extends Jogador {
 	}
 	
 	@Override
+	public int escolherUnidadeParaAtaque(int limite) {
+		return interagirSemConfirmacao("Efeito: Bonus contra carta Oponente ativado\r\nEscolha a posicao da unidade a ser prejudicada: ");
+	}
+	
+	@Override
 	public void exibirMensagemErro(String mensagem) {
 		System.err.println(mensagem);
 	}

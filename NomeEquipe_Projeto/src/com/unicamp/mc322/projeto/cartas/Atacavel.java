@@ -5,5 +5,7 @@ public interface Atacavel {
 	
 	int getAtaque();
 	
+	int getVida();
+	
 	boolean estaVivo();
 }

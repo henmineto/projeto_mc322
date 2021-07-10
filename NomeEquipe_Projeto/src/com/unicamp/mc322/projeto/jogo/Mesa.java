@@ -136,14 +136,9 @@ public class Mesa {
 		for (int i = 0; i < unidadesEmCampoAtacante.length; i++) {
 			if (unidadesEmCampoAtacante[i] != null) {
 				for (int j = 0; j < unidadesEmCampoAtacante[i].getAtaquesPorTurno(); j++) {
-					if (validarDefesa(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
-						unidadesEmCampoAtacante[i].atacar(unidadesEmCampoDefensor[i]);
+					if (realizarCombateUnidades(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
 						if (!unidadesEmCampoDefensor[i].estaVivo()) {
 							unidadesEmCampoDefensor[i] = null;
-
-							if (unidadesEmCampoAtacante[i].isFuria()) {
-								unidadesEmCampoAtacante[i].receberBonusFuria();
-							}
 						}
 					}
 					else {
@@ -161,6 +156,19 @@ public class Mesa {
 		removerCartasEmCampo(jogador1);
 		removerCartasEmCampo(jogador2);
 		quantidadeCartasAtaque = 0;
+	}
+	
+	boolean realizarCombateUnidades(Evocavel atacante, Evocavel defensor) {
+		if (validarDefesa(atacante, defensor)) {
+			atacante.atacar(defensor);
+			
+			if (!defensor.estaVivo() && atacante.isFuria()) {
+				atacante.receberBonusFuria();
+			}
+			
+			return true;
+		}
+		return false;
 	}
 	
 	private void realizarEvocacaoCartas(Jogador jogador) {
@@ -243,7 +251,7 @@ public class Mesa {
 	}
 	
 	private void finalizarTurno(Jogador jogador) {
-		Jogador outroJogador = jogador == jogador1 ? jogador2 : jogador1;
+		Jogador outroJogador = getOutroJogador(jogador);
 		ArrayList<Evocavel> unidadesEvocadasOutroJogador = getUnidadesEvocadas(outroJogador);
 		for (Evocavel unidade : unidadesEvocadasOutroJogador) {
 			try {
@@ -284,6 +292,10 @@ public class Mesa {
 	
 	ArrayList<Evocavel> getUnidadesEvocadas(Jogador jogador) {
 		return jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
+	}
+	
+	Jogador getOutroJogador(Jogador jogador) {
+		return jogador == jogador1 ? jogador2 : jogador1;
 	}
 	
 	private Evocavel[] getUnidadesEmCampo(Jogador jogador) {

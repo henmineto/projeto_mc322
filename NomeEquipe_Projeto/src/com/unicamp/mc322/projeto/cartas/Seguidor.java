@@ -28,7 +28,17 @@ public class Seguidor extends Carta implements Evocavel {
 
 		ataquesPorTurno = 1;
 	}
-	
+
+	@Override
+	public void ativar(Jogador jogador, AtivacaoEfeito ativacao) throws Exception {
+		super.ativar(jogador, ativacao);
+
+		if (ativacao == AtivacaoEfeito.FINAL_DO_TURNO) {
+			vida.desativarEscudo();
+			ataque.liberarAtaque();
+		}
+	}
+
 	public void adicionarTraco(Traco traco) {
 		if (traco.getAtivacao() == AtivacaoTraco.ADICAO_DO_TRACO) {
 			traco.ativar(this);
@@ -77,6 +87,10 @@ public class Seguidor extends Carta implements Evocavel {
 		return vida.getVida() > 0;
 	}
 	
+	public int getVida() {
+		return vida.getVida();
+	}
+	
 	public void receberDano(int dano) {
 		vida.receberDano(dano);
 	}
@@ -91,5 +105,17 @@ public class Seguidor extends Carta implements Evocavel {
 	
 	public void aumentarVida(int bonus) {
 		vida.recuperarVida(bonus);
+	}
+
+	public void curaCompleta() {
+		vida.curaCompleta();
+	}
+
+	public void garantirEscudo() {
+		vida.ativarEscudo();
+	}
+
+	public void zerarAtaque() {
+		ataque.zerarAtaque();
 	}
 }

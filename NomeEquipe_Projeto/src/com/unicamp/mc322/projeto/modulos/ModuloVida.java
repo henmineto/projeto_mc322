@@ -1,12 +1,14 @@
 package com.unicamp.mc322.projeto.modulos;
 
 public class ModuloVida {
+	private int vidaMaxima
 	private int vida;
 	private int ultimoDanoSofrido;
 	private boolean temEscudo;
 	
 	public ModuloVida(int vida) {
 		this.vida = vida;
+		this.vidaMaxima = vida;
 		
 		ultimoDanoSofrido = 0;
 		temEscudo = false;
@@ -40,5 +42,9 @@ public class ModuloVida {
 
 	public void desativarEscudo() {
 		temEscudo = false;
+	}
+
+	public void curaCompleta() {
+		vida = Math.min(vidaMaxima, vida);
 	}
 }
