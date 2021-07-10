@@ -52,9 +52,25 @@ public class MediadorEfeitos {
 	
 	public void atacarNexusInimigo(Jogador jogador) {
 		Evocavel aliada = escolherCartaParaBonus(jogador);
+		if (aliada != null) {			
+			Jogador outro = mesa.getOutroJogador(jogador);
+			
+			aliada.atacar(outro);
+		}
+	}
+	
+	public void golpearTodosEvocadosOponente(Jogador jogador) {
 		Jogador outro = mesa.getOutroJogador(jogador);
+		ArrayList<Evocavel> unidadesOponente = mesa.getUnidadesEvocadas(outro);
 		
-		aliada.atacar(outro);
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+		if (aliada != null) {	
+			for (Evocavel oponente : unidadesOponente) {
+				if (mesa.realizarCombateUnidades(oponente, aliada) && !oponente.estaVivo()) {
+					unidadesOponente.remove(oponente);
+				}
+			}
+		}
 	}
 	
 	private Evocavel escolherCartaParaBonus(Jogador jogador) {
