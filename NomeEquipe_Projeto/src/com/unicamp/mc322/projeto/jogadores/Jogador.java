@@ -52,13 +52,13 @@ public abstract class Jogador implements Atacavel {
 	
 	public Compravel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
 		if (indexCarta < 0 || indexCarta >= mao.size())
-			throw new Exception("Posiï¿½ï¿½o de carta na mï¿½o invï¿½lida. Posiï¿½ï¿½o: "+indexCarta+". Quantidade de cartas: "+mao.size());
+			throw new Exception("Posição de carta na mão inválida. Posição: "+indexCarta+". Quantidade de cartas: "+mao.size());
 			
 		Compravel evocada = mao.get(indexCarta);
 		int custo = evocada.getCusto();
 		
 		if (evocada instanceof Evocavel && !evocarUnidade)
-			throw new Exception("Carta do tipo Unidade nï¿½o pode ser evocada no momento.");
+			throw new Exception("Carta do tipo Unidade não pode ser evocada no momento.");
 		
 		comprarCarta(evocada, custo);
 		
@@ -67,7 +67,7 @@ public abstract class Jogador implements Atacavel {
 	
 	public Compravel substituirCarta(int indexMao, Evocavel cartaMesa) throws Exception {
 		if (indexMao < 0 || indexMao >= mao.size())
-			throw new Exception("Posiï¿½ï¿½o de carta na mï¿½o invï¿½lida. Posiï¿½ï¿½o: "+indexMao+". Quantidade de cartas: "+mao.size());
+			throw new Exception("Posição de carta na mão inválida. Posição: "+indexMao+". Quantidade de cartas: "+mao.size());
 		
 		return mao.remove(indexMao);
 	}
@@ -100,6 +100,8 @@ public abstract class Jogador implements Atacavel {
 	
 	public abstract int escolherUnidadeParaBonus(int limite);
 	
+	public abstract int escolherUnidadeParaAtaque(int limite);
+	
 	public abstract void exibirMensagemErro(String mensagem);
 	
 	private void comprarCarta(Compravel compra, int custo) throws Exception {
@@ -107,7 +109,7 @@ public abstract class Jogador implements Atacavel {
 			int manaDisponivel = mana.getMana() + manaFeitico.getMana();
 			
 			if (manaDisponivel < custo)
-				throw new Exception("Quantidade de mana insuficiente para evocar carta. Disponï¿½vel: "+manaDisponivel+". Exigido: "+custo);
+				throw new Exception("Quantidade de mana insuficiente para evocar carta. Disponível: "+manaDisponivel+". Exigido: "+custo);
 			
 			int feitico = manaFeitico.getMana();
 			manaFeitico.gastarMana(custo);
@@ -115,7 +117,7 @@ public abstract class Jogador implements Atacavel {
 		}
 		
 		if (mana.getMana() < custo) {
-			throw new Exception("Quantidade de mana insuficiente para evocar carta. Disponï¿½vel: "+mana.getMana()+". Exigido: "+custo);
+			throw new Exception("Quantidade de mana insuficiente para evocar carta. Disponível: "+mana.getMana()+". Exigido: "+custo);
 		}
 		
 		mana.gastarMana(custo);

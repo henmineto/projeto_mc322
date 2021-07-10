@@ -66,11 +66,46 @@ public class MediadorEfeitos {
 		Evocavel aliada = escolherCartaParaBonus(jogador);
 		if (aliada != null) {	
 			for (Evocavel oponente : unidadesOponente) {
-				if (mesa.realizarCombateUnidades(oponente, aliada) && !oponente.estaVivo()) {
+				if (mesa.realizarCombateUnidades(aliada, oponente) && !oponente.estaVivo()) {
 					unidadesOponente.remove(oponente);
 				}
 			}
 		}
+	}
+	
+	public void realizarCombateImediato(Jogador jogador) {
+		Jogador outro = mesa.getOutroJogador(jogador);
+		ArrayList<Evocavel> unidadesOponente = mesa.getUnidadesEvocadas(outro);
+		
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+		Evocavel oponente = escolherCartaOponente(jogador);
+		
+		if (aliada != null && oponente != null && mesa.realizarCombateUnidades(oponente, aliada) && !oponente.estaVivo()) {
+			unidadesOponente.remove(oponente);
+		}
+	}
+	
+	private Evocavel escolherCartaOponente(Jogador jogador) {
+		Jogador outro = mesa.getOutroJogador(jogador);
+		ArrayList<Evocavel> unidadesOponente = mesa.getUnidadesEvocadas(outro);
+		
+		boolean aplicarEfeito = true;
+		
+		while(aplicarEfeito) {
+			try {
+				int indexUnidade = jogador.escolherUnidadeParaAtaque(unidadesOponente.size());
+				
+				if (indexUnidade < 0 || indexUnidade >= unidadesOponente.size())
+					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesOponente.size());
+				
+				return unidadesOponente.get(indexUnidade); 
+			}
+			catch (Exception ex) {
+				jogador.exibirMensagemErro(ex.getMessage());
+			}
+		}
+		
+		return null;
 	}
 	
 	private Evocavel escolherCartaParaBonus(Jogador jogador) {
