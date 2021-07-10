@@ -19,6 +19,7 @@ public class Campeao extends Seguidor {
 	@Override
 	public void atacar(Atacavel atacavel) {
 		super.atacar(atacavel);
+		condicao.contabilizarDanoSofrido(vida.getUltimoDanoSofrido());
 		condicao.contabilizarAtaque(atacavel, ataque.getAtaque());
 	}
 

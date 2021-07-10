@@ -39,6 +39,10 @@ public abstract class Jogador implements Atacavel {
 		vidaNexus.receberDano(dano);
 	}
 	
+	public int getAtaque() {
+		return 0;
+	}
+	
 	public boolean estaVivo() {
 		return vidaNexus.getVida() > 0;
 	}

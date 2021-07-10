@@ -12,8 +12,7 @@ public class BonusVida extends ModuloEvolucao {
 	
 	@Override
 	protected void evoluir() {
-		// TODO Auto-generated method stub
-
+		campeao.aumentarVida(bonus);
 	}
 
 }
