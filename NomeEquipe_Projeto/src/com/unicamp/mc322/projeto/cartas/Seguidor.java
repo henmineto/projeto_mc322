@@ -82,7 +82,7 @@ public class Seguidor extends Carta implements Evocavel {
 	}
 	
 	public int getAtaque() {
-		return ataque.getAtaque()
+		return ataque.getAtaque();
 	}
 	
 	public void aumentarDano(int bonus) {

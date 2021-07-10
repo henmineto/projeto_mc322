@@ -12,7 +12,7 @@ public class BonusVida extends ModuloEvolucao {
 	
 	@Override
 	protected void evoluir() {
-		campeao.aumentarVida(bonus);
+		campeao.aumentarVida(bonusVida);
 	}
 
 }

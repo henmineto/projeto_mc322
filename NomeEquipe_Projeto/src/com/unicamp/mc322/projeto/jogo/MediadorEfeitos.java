@@ -45,6 +45,15 @@ public class MediadorEfeitos {
 		}
 	}
 	
+	public void darBonusStatusGlobal(Jogador jogador, int bonusAtaque, int bonusDefesa) {
+		ArrayList<Evocavel> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
+		
+		for (Evocavel carta : unidadesEvocadas) {
+			carta.aumentarVida(bonusDefesa);
+			carta.aumentarDano(bonusAtaque);
+		}
+	}
+	
 	public void darBonusCartaDestruicao(Jogador jogador) {
 		jogador.pegarCarta();
 	}
