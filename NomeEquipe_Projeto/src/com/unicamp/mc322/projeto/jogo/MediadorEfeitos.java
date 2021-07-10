@@ -58,6 +58,11 @@ public class MediadorEfeitos {
 			aliada.atacar(outro);
 		}
 	}
+
+	public void danificarNexusInimigo(Jogador jogador, int dano) {
+		Jogador outro = mesa.getOutroJogador(jogador);
+		outro.receberDano(dano);
+	}
 	
 	public void golpearTodosEvocadosOponente(Jogador jogador) {
 		Jogador outro = mesa.getOutroJogador(jogador);
@@ -84,6 +89,30 @@ public class MediadorEfeitos {
 			unidadesOponente.remove(oponente);
 		}
 	}
+
+	public void realizarCuraCompleta(Jogador jogador) {
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+
+		if (aliada != null) {
+			aliada.curaCompleta();
+		}
+	}
+
+	public void garantirEscudoUnidade(Jogador jogador) {
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+
+		if (aliada != null) {
+			aliada.garantirEscudo();
+		}
+	}
+
+	public void zerarAtaqueUnidade(Jogador jogador) {
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+
+		if (aliada != null) {
+			aliada.zerarAtaque();
+		}
+	}
 	
 	private Evocavel escolherCartaOponente(Jogador jogador) {
 		Jogador outro = mesa.getOutroJogador(jogador);
@@ -96,7 +125,7 @@ public class MediadorEfeitos {
 				int indexUnidade = jogador.escolherUnidadeParaAtaque(unidadesOponente.size());
 				
 				if (indexUnidade < 0 || indexUnidade >= unidadesOponente.size())
-					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesOponente.size());
+					throw new Exception("Posiï¿½ï¿½o de unidade evocada invï¿½lida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesOponente.size());
 				
 				return unidadesOponente.get(indexUnidade); 
 			}
@@ -118,7 +147,7 @@ public class MediadorEfeitos {
 				int indexUnidade = jogador.escolherUnidadeParaBonus(unidadesEvocadas.size());
 				
 				if (indexUnidade < 0 || indexUnidade >= unidadesEvocadas.size())
-					throw new Exception("Posição de unidade evocada inválida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesEvocadas.size());
+					throw new Exception("Posiï¿½ï¿½o de unidade evocada invï¿½lida. Informada: "+indexUnidade+". Quantidade de unidades: "+unidadesEvocadas.size());
 				
 				return unidadesEvocadas.get(indexUnidade); 
 			}

@@ -10,4 +10,11 @@ public class CuraCompleta extends Efeito {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void ativar(Jogador jogador, Ativavel carta) throws Exception {
+		super.ativar(jogador, carta);
+
+		MediadorEfeitos.getInstance().realizarCuraCompleta(jogador);
+	}
+
 }

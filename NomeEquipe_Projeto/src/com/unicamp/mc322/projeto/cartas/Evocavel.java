@@ -10,6 +10,8 @@ public interface Evocavel extends Atacavel, Compravel {
 	void aumentarDano(int bonus);
 	
 	void aumentarVida(int bonus);
+
+	void curaCompleta();
 	
 	void setAtaqueDuplo();
 	
@@ -22,4 +24,8 @@ public interface Evocavel extends Atacavel, Compravel {
 	void receberBonusFuria();
 	
 	void setElusivo();
+
+	void garantirEscudo();
+
+	void zerarAtaque();
 }
