@@ -26,4 +26,8 @@ public abstract class Carta implements Compravel {
 	public int getCusto() {
 		return custo;
 	}
+	
+	public String toString() {
+		return nome + " (" + custo + ")";
+	}
 }

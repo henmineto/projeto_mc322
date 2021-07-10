@@ -289,4 +289,25 @@ public class Mesa {
 	private Evocavel[] getUnidadesEmCampo(Jogador jogador) {
 		return jogador == atacante ? unidadesEmCampoAtacante : unidadesEmCampoDefensor;
 	}
+	
+	public String toString() {
+		String txt = "Jogador 2:\n";
+		txt += this.jogador2;
+		txt += formataUnidadesEmCampo();
+		txt = "\nJogador 1:";
+		txt += this.jogador1;
+		return txt;
+	}
+	
+	private String formataUnidadesEmCampo() {
+		String txt = "\nAtacante:";
+		for (int i = 0; i < this.unidadesEmCampoAtacante.length; i++) {
+			txt += "\n" + i + ": " + this.unidadesEmCampoAtacante[i];
+		}
+		txt += "\nDefensor:";
+		for (int i = 0; i < this.unidadesEmCampoDefensor.length; i++) {
+			txt += "\n" + i + ": " + this.unidadesEmCampoAtacante[i];
+		}
+		return txt;
+	}
 }
