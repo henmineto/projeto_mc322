@@ -32,6 +32,10 @@ public class ModuloVida {
 		return vida;
 	}
 	
+	public int getVidaMaxima() {
+		return vidaMaxima;
+	}
+	
 	public int getUltimoDanoSofrido() {
 		return ultimoDanoSofrido;
 	}
