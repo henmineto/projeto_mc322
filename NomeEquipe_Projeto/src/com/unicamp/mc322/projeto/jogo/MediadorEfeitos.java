@@ -50,6 +50,13 @@ public class MediadorEfeitos {
 		jogador.pegarCarta();
 	}
 	
+	public void atacarNexusInimigo(Jogador jogador) {
+		Evocavel aliada = escolherCartaParaBonus(jogador);
+		Jogador outro = mesa.getOutroJogador(jogador);
+		
+		aliada.atacar(outro);
+	}
+	
 	private Evocavel escolherCartaParaBonus(Jogador jogador) {
 		ArrayList<Evocavel> unidadesEvocadas = mesa.getUnidadesEvocadas(jogador);
 		

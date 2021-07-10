@@ -243,7 +243,7 @@ public class Mesa {
 	}
 	
 	private void finalizarTurno(Jogador jogador) {
-		Jogador outroJogador = jogador == jogador1 ? jogador2 : jogador1;
+		Jogador outroJogador = getOutroJogador(jogador);
 		ArrayList<Evocavel> unidadesEvocadasOutroJogador = getUnidadesEvocadas(outroJogador);
 		for (Evocavel unidade : unidadesEvocadasOutroJogador) {
 			try {
@@ -284,6 +284,10 @@ public class Mesa {
 	
 	ArrayList<Evocavel> getUnidadesEvocadas(Jogador jogador) {
 		return jogador == jogador1 ? unidadesEvocadasJogador1 : unidadesEvocadasJogador2;
+	}
+	
+	Jogador getOutroJogador(Jogador jogador) {
+		return jogador == jogador1 ? jogador2 : jogador1;
 	}
 	
 	private Evocavel[] getUnidadesEmCampo(Jogador jogador) {
