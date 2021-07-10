@@ -50,6 +50,14 @@ public abstract class Jogador implements Atacavel {
 		return vidaNexus.getVidaMaxima();
 	}
 	
+	private int getMana() {
+		return mana.getMana();
+	}
+	
+	private int getManaMaximo() {
+		return mana.getManaMaximo();
+	}
+	
 	public boolean estaVivo() {
 		return vidaNexus.getVida() > 0;
 	}
@@ -132,7 +140,9 @@ public abstract class Jogador implements Atacavel {
 	}
 	
 	public String toString() {
-		String txt = "\nVida: " + this.getVida() + "/" + this.getVidaMaxima();
+		String txt = "============================================";
+		txt += "\nVida: " + this.getVida() + "/" + this.getVidaMaxima();
+		txt += "\nMana: " + this.getMana() + "/" + this.getManaMaximo();
 		txt += "\nMão:";
 		txt += "\n**********************";
 		for (int i = 0; i < this.mao.size(); i++) {

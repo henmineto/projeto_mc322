@@ -306,7 +306,7 @@ public class Mesa {
 		String txt = "Jogador 2:\n";
 		txt += this.jogador2;
 		txt += formataUnidadesEmCampo();
-		txt = "\nJogador 1:";
+		txt += "\nJogador 1:\n";
 		txt += this.jogador1;
 		return txt;
 	}
@@ -314,11 +314,17 @@ public class Mesa {
 	private String formataUnidadesEmCampo() {
 		String txt = "\nAtacante:";
 		for (int i = 0; i < this.unidadesEmCampoAtacante.length; i++) {
-			txt += "\n" + i + ": " + this.unidadesEmCampoAtacante[i];
+			txt += "\n" + i + ": ";
+			if (this.unidadesEmCampoAtacante[i] != null) {
+				txt += this.unidadesEmCampoAtacante[i];
+			}
 		}
 		txt += "\nDefensor:";
 		for (int i = 0; i < this.unidadesEmCampoDefensor.length; i++) {
-			txt += "\n" + i + ": " + this.unidadesEmCampoAtacante[i];
+			txt += "\n" + i + ": ";
+			if (this.unidadesEmCampoDefensor[i] != null) {
+				txt += this.unidadesEmCampoDefensor[i];
+			}
 		}
 		return txt;
 	}

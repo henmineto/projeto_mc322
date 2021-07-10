@@ -19,4 +19,8 @@ public class ModuloMana {
 	public int getMana() {
 		return mana;
 	}
+	
+	public int getManaMaximo() {
+		return maxMana;
+	}
 }
