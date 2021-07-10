@@ -29,5 +29,5 @@ public interface Evocavel extends Atacavel, Compravel {
 
 	void zerarAtaque();
 
-	void verificarMatouNesseTurno();
+	boolean verificarMatouNesseTurno();
 }
