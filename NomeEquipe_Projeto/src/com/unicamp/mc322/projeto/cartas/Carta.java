@@ -3,6 +3,7 @@ package com.unicamp.mc322.projeto.cartas;
 import java.util.ArrayList;
 
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
+import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public abstract class Carta implements Compravel {
 	private String nome;
@@ -14,10 +15,10 @@ public abstract class Carta implements Compravel {
 		this.efeitos = efeitos;
 	}
 	
-	public void ativar(AtivacaoEfeito ativacao) throws Exception {
+	public void ativar(Jogador jogador, AtivacaoEfeito ativacao) throws Exception {
 		for (Efeito efeito : efeitos) {
 			if (efeito.getAtivacao() == ativacao && !efeito.getUsado()) {
-				efeito.ativar();
+				efeito.ativar(jogador, this);
 			}
 		}
 	}

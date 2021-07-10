@@ -201,7 +201,7 @@ public class Mesa {
 		
 		Compravel carta = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
 		
-		carta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
+		carta.ativar(jogador, AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		
 		if(carta instanceof Evocavel) {
 			unidadesEvocadas.add((Evocavel)carta);
@@ -217,7 +217,7 @@ public class Mesa {
 		Evocavel substituida = unidadesEvocadas.get(indexMesa);
 		Compravel substituta = jogador.substituirCarta(indexMao, substituida);
 	
-		substituta.ativar(AtivacaoEfeito.EVOCACAO_DA_CARTA);
+		substituta.ativar(jogador, AtivacaoEfeito.EVOCACAO_DA_CARTA);
 		unidadesEvocadas.remove(indexMesa);
 		
 		if(substituta instanceof Evocavel) {
@@ -243,13 +243,14 @@ public class Mesa {
 	}
 	
 	private void finalizarTurno(Jogador jogador) {
-		ArrayList<Evocavel> unidadesEvocadasOutroJogador = jogador == jogador1 ? unidadesEvocadasJogador2 : unidadesEvocadasJogador1;
+		Jogador outroJogador = jogador == jogador1 ? jogador2 : jogador1;
+		ArrayList<Evocavel> unidadesEvocadasOutroJogador = getUnidadesEvocadas(outroJogador);
 		for (Evocavel unidade : unidadesEvocadasOutroJogador) {
 			try {
-				unidade.ativar(AtivacaoEfeito.FINAL_DO_TURNO);
+				unidade.ativar(outroJogador, AtivacaoEfeito.FINAL_DO_TURNO);
 			}
 			catch (Exception ex) {
-				jogador.exibirMensagemErro(ex.getMessage());
+				outroJogador.exibirMensagemErro(ex.getMessage());
 			}
 		}
 	}
