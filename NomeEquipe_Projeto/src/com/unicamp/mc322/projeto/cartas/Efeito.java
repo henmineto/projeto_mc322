@@ -4,7 +4,6 @@ import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public abstract class Efeito {
-	protected Jogador jogador;
 	protected boolean usado;
 	private AtivacaoEfeito momento;
 	
@@ -20,7 +19,7 @@ public abstract class Efeito {
 		return usado;
 	}
 	
-	protected void ativar() throws Exception {
+	protected void ativar(Jogador jogador, Ativavel carta) throws Exception {
 		if (usado)
 			throw new Exception("Não é pssível ativar esse efeito, pois ele já foi utilizado.");
 		

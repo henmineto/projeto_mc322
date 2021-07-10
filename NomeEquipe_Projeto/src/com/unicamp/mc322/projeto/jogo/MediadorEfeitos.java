@@ -44,4 +44,8 @@ public class MediadorEfeitos {
 			}
 		}
 	}
+	
+	public void darBonusCartaDestruicao(Jogador jogador) {
+		jogador.pegarCarta();
+	}
 }

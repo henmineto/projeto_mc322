@@ -1,7 +1,11 @@
 package com.unicamp.mc322.projeto.cartas.efeitos;
 
+import com.unicamp.mc322.projeto.cartas.Ativavel;
 import com.unicamp.mc322.projeto.cartas.Efeito;
+import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
+import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.MediadorEfeitos;
 
 public class BonusCartaDestruicao extends Efeito {
 
@@ -10,4 +14,17 @@ public class BonusCartaDestruicao extends Efeito {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void ativar(Jogador jogador, Ativavel carta) throws Exception {
+		if (carta instanceof Evocavel) {
+			if (!((Evocavel)carta).estaVivo()) {
+				super.ativar(jogador, carta);
+				
+				MediadorEfeitos.getInstance().darBonusCartaDestruicao(jogador);
+			}
+		}
+		else {
+			throw new Exception("Efeito BonusCartaDestruicao não pode ser usado nessa carta: "+ carta);
+		}
+	}
 }
