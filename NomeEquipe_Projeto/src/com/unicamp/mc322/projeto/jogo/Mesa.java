@@ -76,7 +76,7 @@ public class Mesa {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(atacante);
 		
 		boolean montarAtaque = true;
-		while (montarAtaque) {
+		while (montarAtaque && unidadesEvocadas.size() > 0) {
 			try {
 				int indexMesa = atacante.escolherUnidadeParaCampo(unidadesEvocadas.size());
 				
@@ -108,7 +108,7 @@ public class Mesa {
 		
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(defensor);
 		
-		while (montarDefesa) {
+		while (montarDefesa && unidadesEvocadas.size() > 0) {
 			try {
 				int indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size());
 				
