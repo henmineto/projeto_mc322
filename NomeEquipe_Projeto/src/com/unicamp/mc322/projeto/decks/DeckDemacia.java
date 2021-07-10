@@ -56,7 +56,7 @@ public class DeckDemacia extends Deck {
 		
 		//Vanguarda
 		efeitos = new ArrayList<Efeito>();
-		efeitos.add(new BonusStatusGlobal(AtivacaoEfeito.EVOCACAO_DA_CARTA));
+		efeitos.add(new BonusStatusGlobal(AtivacaoEfeito.EVOCACAO_DA_CARTA, 1, 1));
 		
 		cartas.add(new Seguidor("Vanguarda", 3, 3, 4, efeitos, new ArrayList<Traco>()));
 		
