@@ -99,8 +99,8 @@ public abstract class Jogador implements Atacavel {
 		if (compra instanceof Feitico) {
 			int manaDisponivel = mana.getMana() + manaFeitico.getMana();
 			
-			if (manaDisponivel > custo)
-				throw new Exception("Quantidade de mana insuficiente para ativar carta. Dispon�vel: "+manaDisponivel+". Exigido: "+custo);
+			if (manaDisponivel < custo)
+				throw new Exception("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+manaDisponivel+". Exigido: "+custo);
 			
 			int feitico = manaFeitico.getMana();
 			manaFeitico.gastarMana(custo);
@@ -108,7 +108,7 @@ public abstract class Jogador implements Atacavel {
 		}
 		
 		if (mana.getMana() < custo) {
-			throw new Exception("Quantidade de mana insuficiente para ativar carta. Dispon�vel: "+mana.getMana()+". Exigido: "+custo);
+			throw new Exception("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+mana.getMana()+". Exigido: "+custo);
 		}
 		
 		mana.gastarMana(custo);
