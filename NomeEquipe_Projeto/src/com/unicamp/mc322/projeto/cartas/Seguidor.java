@@ -20,18 +20,24 @@ public class Seguidor extends Carta implements Evocavel {
 	private int furiaBonusAtaque;
 	private boolean matouNesseTurno;
 	
-	public Seguidor(String nome, int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos) {
-		super(nome, custo, efeitos);
+	public Seguidor(String nome, int vida, int ataque, int custo) {
+		super(nome, custo);
 		this.vida = new ModuloVida(vida);
 		this.ataque = new ModuloAtaque(ataque);
 		this.tracos = new ArrayList<Traco>();
-		for(Traco traco : tracos) {
-			adicionarTraco(traco);
-		}
 
 		ataquesPorTurno = 1;
 
 		matouNesseTurno = false;
+	}
+	
+	public void addTraco(Traco traco) {
+		if (traco.getAtivacao() == AtivacaoTraco.ADICAO_DO_TRACO) {
+			traco.ativar(this);
+		}
+		else {
+			tracos.add(traco);
+		}
 	}
 
 	@Override
@@ -42,15 +48,6 @@ public class Seguidor extends Carta implements Evocavel {
 			matouNesseTurno = false;
 			vida.desativarEscudo();
 			ataque.liberarAtaque();
-		}
-	}
-
-	public void adicionarTraco(Traco traco) {
-		if (traco.getAtivacao() == AtivacaoTraco.ADICAO_DO_TRACO) {
-			traco.ativar(this);
-		}
-		else {
-			tracos.add(traco);
 		}
 	}
 	

@@ -16,7 +16,7 @@ public class Bot extends Jogador {
 	@Override
 	public int escolherCartaNaMao(boolean confirmarEscolha) {
 		int index = -1;
-		if (!confirmarEscolha || random.nextBoolean()) {
+		if (!confirmarEscolha || (mao.size() > 0 && random.nextBoolean())) {
 			index = random.nextInt(mao.size());
 			System.out.println("Bot escolheu evocar a carta na posição: "+index);
 		}
@@ -30,7 +30,7 @@ public class Bot extends Jogador {
 	@Override
 	public int escolherDescartes(boolean confirmarEscolha) {
 		int index = -1;
-		if (!confirmarEscolha || random.nextBoolean()) {
+		if (!confirmarEscolha || (mao.size() > 0 && random.nextBoolean())) {
 			index = random.nextInt(mao.size());
 			System.out.println("Bot escolheu fazer " + index + " descartes.");
 		}
@@ -44,7 +44,7 @@ public class Bot extends Jogador {
 	@Override
 	public int escolherUnidadeParaTroca(int limite) {
 		int index = -1;
-		if (random.nextBoolean()) {
+		if (limite > 0 && random.nextBoolean()) {
 			index = random.nextInt(limite);
 			System.out.println("Bot escolheu substituir unidade evocada na posição: "+index);
 		}
@@ -58,7 +58,7 @@ public class Bot extends Jogador {
 	@Override
 	public int escolherUnidadeParaCampo(int limite) {
 		int index = -1;
-		if (random.nextBoolean()) {
+		if (limite > 0 && random.nextBoolean()) {
 			index = random.nextInt(limite);
 			System.out.println("Bot escolheu colocar em campo unidade evocada na posição: "+index);
 		}
@@ -71,21 +71,21 @@ public class Bot extends Jogador {
 
 	@Override
 	public int escolherPosicaoDefesa(int limite) {
-		int index = random.nextInt(limite);
+		int index = limite > 0 ? random.nextInt(limite) : 0;
 		System.out.println("Bot escolheu colocar em campo uma defesa na posição: "+index);
 		return index;
 	}
 
 	@Override
 	public int escolherUnidadeParaBonus(int limite) {
-		int index = random.nextInt(limite);
+		int index = limite > 0 ? random.nextInt(limite) : 0;
 		System.out.println("Efeito: Bonus para Carta Aliada ativado\r\nBot escolheu bonificar unidade na posição: "+index);
 		return index;
 	}
 	
 	@Override
 	public int escolherUnidadeParaAtaque(int limite) {
-		int index = random.nextInt(limite);
+		int index = limite > 0 ? random.nextInt(limite) : 0;
 		System.out.println("Efeito: Bonus contra carta Oponente ativado\\r\\nBot escolheu prejudicar unidade na posição: "+index);
 		return index;
 	}

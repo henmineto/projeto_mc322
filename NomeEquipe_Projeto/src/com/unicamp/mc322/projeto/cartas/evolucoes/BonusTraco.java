@@ -13,7 +13,7 @@ public class BonusTraco extends ModuloEvolucao {
 	
 	@Override
 	protected void evoluir() {
-		campeao.adicionarTraco(bonusTraco);
+		campeao.addTraco(bonusTraco);
 	}
 
 }

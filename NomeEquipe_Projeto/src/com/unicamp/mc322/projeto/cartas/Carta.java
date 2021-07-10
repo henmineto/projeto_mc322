@@ -10,10 +10,10 @@ public abstract class Carta implements Compravel {
 	private int custo;
 	private ArrayList<Efeito> efeitos;
 	
-	protected Carta(String nome, int custo, ArrayList<Efeito> efeitos) {
+	protected Carta(String nome, int custo) {
 		this.nome = nome;
 		this.custo = custo;
-		this.efeitos = efeitos;
+		this.efeitos = new ArrayList<Efeito>();
 	}
 	
 	public void ativar(Jogador jogador, AtivacaoEfeito ativacao) throws Exception {
@@ -22,6 +22,10 @@ public abstract class Carta implements Compravel {
 				efeito.ativar(jogador, this);
 			}
 		}
+	}
+	
+	public void addEfeito(Efeito efeito) {
+		efeitos.add(efeito);
 	}
 	
 	public int getCusto() {

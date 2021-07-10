@@ -2,18 +2,21 @@ package com.unicamp.mc322.projeto.cartas;
 
 import java.util.ArrayList;
 
-import com.unicamp.mc322.projeto.jogadores.Jogador;
-
 public class Campeao extends Seguidor {
 	
 	private ModuloCondicao condicao;
 	private ArrayList<ModuloEvolucao> evolucoes;
 	private boolean nivelSuperior;
 
-	public Campeao(String nome, int vida, int ataque, int custo, ArrayList<Efeito> efeitos, ArrayList<Traco> tracos, ModuloCondicao condicao, ArrayList<ModuloEvolucao> evolucoes) {
-		super(nome, vida, ataque, custo, efeitos, tracos);
-		setEvolucao(evolucoes);
+	public Campeao(String nome, int vida, int ataque, int custo, ModuloCondicao condicao) {
+		super(nome, vida, ataque, custo);
+		this.evolucoes = new ArrayList<ModuloEvolucao>();
 		setCondicao(condicao);
+	}
+	
+	public void addEvolucao(ModuloEvolucao evolucao) {
+		evolucao.setCampeao(this);
+		evolucoes.add(evolucao);
 	}
 	
 	@Override
@@ -43,16 +46,6 @@ public class Campeao extends Seguidor {
 		
 		if (this.condicao != null) {
 			this.condicao.setCampeao(this);
-		}
-	}
-	
-	private void setEvolucao(ArrayList<ModuloEvolucao> evolucoes) {
-		this.evolucoes = evolucoes;
-		
-		if (this.evolucoes != null) {
-			for (ModuloEvolucao evolucao : evolucoes) {
-				evolucao.setCampeao(this);
-			}
 		}
 	}
 }

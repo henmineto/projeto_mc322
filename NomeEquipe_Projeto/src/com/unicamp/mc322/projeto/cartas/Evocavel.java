@@ -1,7 +1,7 @@
 package com.unicamp.mc322.projeto.cartas;
 
 public interface Evocavel extends Atacavel, Compravel {
-	void adicionarTraco(Traco traco);
+	void addTraco(Traco traco);
 	
 	boolean isElusivo();
 	
