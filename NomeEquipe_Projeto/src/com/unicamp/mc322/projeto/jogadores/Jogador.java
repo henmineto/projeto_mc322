@@ -89,7 +89,9 @@ public abstract class Jogador implements Atacavel {
 	}
 	
 	public void pegarCarta() {
-		mao.add(deck.pegarCarta());
+		Compravel carta = deck.pegarCarta();
+		if (carta != null)
+			mao.add(deck.pegarCarta());
 	}
 	
 	public boolean descartaCarta() {
@@ -103,6 +105,8 @@ public abstract class Jogador implements Atacavel {
 		}
 		return false;
 	}
+	
+	public abstract char escolherAcao();
 	
 	public abstract int escolherDescartes(boolean confirmarEscolha);
 	

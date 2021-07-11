@@ -9,6 +9,7 @@ import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public class Mesa {
 	private final int QTD_UNIDADES_EVOCADAS = 6;
+	private final int QTD_CARTAS_INICIAIS = 4;
 
 	private Jogador jogador1;
 	private Jogador jogador2;
@@ -39,6 +40,14 @@ public class Mesa {
 		}
 	}
 	
+	public Jogador getAtacante() {
+		return this.atacante;
+	}
+	
+	public Jogador getDefensor() {
+		return this.defensor;
+	}
+	
 	public void iniciarRodada() {
 		quantidadeRodadas++;
 		
@@ -52,7 +61,7 @@ public class Mesa {
 		}
 		
 		if (quantidadeRodadas == 1) {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < QTD_CARTAS_INICIAIS - 1; i++) { // jogadores pegam QTD_CARTAS_INICIAIS cartas na 1ª rodada
 				jogador1.pegarCarta();
 				jogador2.pegarCarta();
 			}
@@ -66,70 +75,36 @@ public class Mesa {
 	}
 	
 	public void realizarTurnoAtacante() {
-		
-		// substitui 0-4 cartas na 1ª rodada
+		// substitui cartas na 1ª rodada
 		if (quantidadeRodadas == 1)
 			realizarSubstituicaoCartas(atacante);
-		
-		realizarEvocacaoCartas(atacante);
-		
-		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(atacante);
-		
-		boolean montarAtaque = true;
-		while (montarAtaque && unidadesEvocadas.size() > 0) {
-			try {
-				int indexMesa = atacante.escolherUnidadeParaCampo(unidadesEvocadas.size());
-				
-				while(indexMesa >= 0 && quantidadeCartasAtaque < QTD_UNIDADES_EVOCADAS) {
-					colocarCartaEmCampo(atacante, indexMesa, quantidadeCartasAtaque);
-					quantidadeCartasAtaque++;
-					indexMesa = atacante.escolherUnidadeParaCampo(unidadesEvocadas.size());
-				}
-				
-				montarAtaque = false;
-			}
-			catch (Exception ex) {
-				atacante.exibirMensagemErro(ex.getMessage());
-			}
-		}
-		
-		finalizarTurno(atacante);
 	}
 	
 	public void realizarTurnoDefensor() {
-		
-		// substitui 0-4 cartas na 1ª rodada
+		// substitui cartas na 1ª rodada
 		if (quantidadeRodadas == 1)
 			realizarSubstituicaoCartas(defensor);
-		
-		realizarEvocacaoCartas(defensor);
-		
-		boolean montarDefesa = quantidadeCartasAtaque > 0;
-		
-		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(defensor);
-		
-		while (montarDefesa && unidadesEvocadas.size() > 0) {
-			try {
-				int indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size());
-				
-				while (indexMesa >= 0) {
-					int indexDefesa = defensor.escolherPosicaoDefesa(quantidadeCartasAtaque);
-					
-					if (indexDefesa >= quantidadeCartasAtaque)
-						throw new Exception("N�o h� carta de ataque na posi��o escolhida para defesa. Posi��o: "+indexDefesa);
-					
-					colocarCartaEmCampo(atacante, indexMesa, indexDefesa);
-					indexMesa = defensor.escolherUnidadeParaCampo(unidadesEvocadas.size());
-				}
-				
-				montarDefesa = false;
+	}
+	
+	public void addUnidadeCampo(Jogador j) {
+		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(j);
+		try {
+			int indexMesa = j.escolherUnidadeParaCampo(unidadesEvocadas.size());
+			if (j.equals(atacante)) {
+				colocarCartaEmCampo(j, indexMesa, quantidadeCartasAtaque);
+				quantidadeCartasAtaque++;
+				indexMesa = j.escolherUnidadeParaCampo(unidadesEvocadas.size());
 			}
-			catch (Exception ex) {
-				defensor.exibirMensagemErro(ex.getMessage());
+			else if (j.equals(defensor) && quantidadeCartasAtaque > 0) {
+				int indexDefesa = j.escolherPosicaoDefesa(quantidadeCartasAtaque);
+				if (indexDefesa >= quantidadeCartasAtaque)
+					throw new Exception("N�o h� carta de ataque na posi��o escolhida para defesa. Posi��o: "+indexDefesa);
+				colocarCartaEmCampo(defensor, indexMesa, indexDefesa);
 			}
 		}
-		
-		finalizarTurno(defensor);
+		catch (Exception ex) {
+			j.exibirMensagemErro(ex.getMessage());
+		}
 	}
 	
 	public void realizarCombate() {
@@ -171,21 +146,15 @@ public class Mesa {
 		return false;
 	}
 	
-	private void realizarEvocacaoCartas(Jogador jogador) {
-		boolean evocarCarta = true;
-		
-		while (evocarCarta) {
-			try {
-				int indexMao = jogador.escolherCartaNaMao(true);
+	void realizarEvocacaoCartas(Jogador jogador) {
+		try {
+			int indexMao = jogador.escolherCartaNaMao(true);
 				
-				if (indexMao > 0)
-					evocarCarta(jogador, indexMao);
-
-				evocarCarta = false;
-			}
-			catch (Exception ex) {
-				jogador.exibirMensagemErro(ex.getMessage());
-			}
+			if (indexMao > 0)
+				evocarCarta(jogador, indexMao);
+		}
+		catch (Exception ex) {
+			jogador.exibirMensagemErro(ex.getMessage());
 		}
 	}
 	
@@ -250,7 +219,7 @@ public class Mesa {
 		unidadesEmCampo[indexCampo] = unidadesEvocadas.remove(indexEvocadas);
 	}
 	
-	private void finalizarTurno(Jogador jogador) {
+	void finalizarTurno(Jogador jogador) {
 		Jogador outroJogador = getOutroJogador(jogador);
 		ArrayList<Evocavel> unidadesEvocadasOutroJogador = getUnidadesEvocadas(outroJogador);
 		for (Evocavel unidade : unidadesEvocadasOutroJogador) {

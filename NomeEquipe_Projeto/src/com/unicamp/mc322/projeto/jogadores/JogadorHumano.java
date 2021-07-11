@@ -87,4 +87,10 @@ public class JogadorHumano extends Jogador {
 		return scanner.nextInt();
 	}
 
+	@Override
+	public char escolherAcao() {
+		char escolha = scanner.next().toUpperCase().charAt(0);
+		return escolha;
+	}
+
 }
