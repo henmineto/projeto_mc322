@@ -120,15 +120,19 @@ public class Mesa {
 			if (unidadesEmCampoAtacante[i] != null) {
 				for (int j = 0; j < unidadesEmCampoAtacante[i].getAtaquesPorTurno(); j++) {
 					if (realizarCombateUnidades(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
+						Jogo.getInstance().mostrarMensagem(unidadesEmCampoAtacante[i] + " ataca " + unidadesEmCampoDefensor[i] + "!\n");
 						if (!unidadesEmCampoDefensor[i].estaVivo()) {
+							Jogo.getInstance().mostrarMensagem(unidadesEmCampoDefensor[i] + " morreu!\n");
 							unidadesEmCampoDefensor[i] = null;
 						}
 					}
 					else {
+						Jogo.getInstance().mostrarMensagem(unidadesEmCampoAtacante[i] + " ataca o Nexus!\n");
 						unidadesEmCampoAtacante[i].atacar(defensor);
 					}
 
 					if (!unidadesEmCampoAtacante[i].estaVivo()) {
+						Jogo.getInstance().mostrarMensagem(unidadesEmCampoAtacante[i] + " morreu!\n");
 						unidadesEmCampoAtacante[i] = null;
 						break;
 					}

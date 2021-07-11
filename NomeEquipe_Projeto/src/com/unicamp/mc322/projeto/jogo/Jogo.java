@@ -35,7 +35,8 @@ public class Jogo {
 				imprimeMesa();
 				primeiraJogada = false;
 			}
-			
+
+			mostrarMensagem("Turno do atacante\n");
 			mesa.realizarTurnoAtacante();
 			
 			Jogador atacante = mesa.getAtacante();
@@ -56,6 +57,7 @@ public class Jogo {
 			
 			
 			// defensor
+			mostrarMensagem("Turno do defensor\n");
 			mesa.realizarTurnoDefensor();
 			
 			Jogador defensor = mesa.getDefensor();

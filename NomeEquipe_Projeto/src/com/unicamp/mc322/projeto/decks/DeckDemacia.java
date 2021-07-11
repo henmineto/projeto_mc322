@@ -29,14 +29,18 @@ public class DeckDemacia extends Deck {
 		cartas.add(valorRedobrado);
 		
 		//Golpe Certeiro
-		Feitico golpeCerteiro = new Feitico("Golpe Certeiro", 1);
-		golpeCerteiro.addEfeito(new BonusStatusUnidade(AtivacaoEfeito.EVOCACAO_DA_CARTA, 1, 1));
-		cartas.add(golpeCerteiro);
-		
-		//Combate Um-a-um
-		Feitico combateUmAUm = new Feitico("Combate um-a-um", 2);
-		combateUmAUm.addEfeito(new CombateImediato(AtivacaoEfeito.EVOCACAO_DA_CARTA));
-		cartas.add(combateUmAUm);
+		for (int i = 0; i < 3; i++) {
+			Feitico golpeCerteiro = new Feitico("Golpe Certeiro", 1);
+			golpeCerteiro.addEfeito(new BonusStatusUnidade(AtivacaoEfeito.EVOCACAO_DA_CARTA, 1, 1));
+			cartas.add(golpeCerteiro);
+		}
+
+		for (int i = 0; i < 2; i++) {
+			//Combate Um-a-um
+			Feitico combateUmAUm = new Feitico("Combate um-a-um", 2);
+			combateUmAUm.addEfeito(new CombateImediato(AtivacaoEfeito.EVOCACAO_DA_CARTA));
+			cartas.add(combateUmAUm);
+		}
 	}
 	
 	private void gerarSeguidores() {
@@ -46,27 +50,37 @@ public class DeckDemacia extends Deck {
 		cartas.add(tiana);
 		
 		//Vanguarda
-		Seguidor vanguarda = new Seguidor("Vanguarda", 3, 3, 4);
-		vanguarda.addEfeito(new BonusStatusGlobal(AtivacaoEfeito.EVOCACAO_DA_CARTA, 1, 1));
-		cartas.add(vanguarda);
-		
-		//Duelista
-		Seguidor duelista = new Seguidor("Duelista", 2, 3, 3);
-		duelista.addEfeito(new BonusUnidadeAoMatar(AtivacaoEfeito.FINAL_DO_TURNO, new Seguidor("Poro", 1, 2, 1)));
-		cartas.add(duelista);
-		
-		//Defensor
-		Seguidor defensor = new Seguidor("Defensor", 2, 2, 2);
-		defensor.addTraco(new Furia(AtivacaoTraco.APOS_ATAQUE, 0, 1));
-		cartas.add(defensor);
-		
-		//Poro
-		cartas.add(new Seguidor("Poro", 1, 2, 1));
-		
-		//Poro Defensor
-		Seguidor poroDefensor = new Seguidor("Poro Defensor", 2, 1, 1);
-		poroDefensor.addEfeito(new BonusCartaDestruicao(AtivacaoEfeito.FINAL_DO_TURNO));
-		cartas.add(poroDefensor);
+		for (int i = 0; i < 2; i++) {
+			Seguidor vanguarda = new Seguidor("Vanguarda", 3, 3, 4);
+			vanguarda.addEfeito(new BonusStatusGlobal(AtivacaoEfeito.EVOCACAO_DA_CARTA, 1, 1));
+			cartas.add(vanguarda);
+		}
+
+		for (int i = 0; i < 2; i++) {
+			//Duelista
+			Seguidor duelista = new Seguidor("Duelista", 2, 3, 3);
+			duelista.addEfeito(new BonusUnidadeAoMatar(AtivacaoEfeito.FINAL_DO_TURNO, new Seguidor("Poro", 1, 2, 1)));
+			cartas.add(duelista);
+		}
+
+		for (int i = 0; i < 3; i++) {
+			//Defensor
+			Seguidor defensor = new Seguidor("Defensor", 2, 2, 2);
+			defensor.addTraco(new Furia(AtivacaoTraco.APOS_ATAQUE, 0, 1));
+			cartas.add(defensor);
+		}
+
+		for (int i = 0; i < 2; i++) {
+			//Poro
+			cartas.add(new Seguidor("Poro", 1, 2, 1));
+		}
+
+		for (int i = 0; i < 2; i++) {
+			//Poro Defensor
+			Seguidor poroDefensor = new Seguidor("Poro Defensor", 2, 1, 1);
+			poroDefensor.addEfeito(new BonusCartaDestruicao(AtivacaoEfeito.FINAL_DO_TURNO));
+			cartas.add(poroDefensor);
+		}
 	}
 	
 	private void gerarCampeoes() {
