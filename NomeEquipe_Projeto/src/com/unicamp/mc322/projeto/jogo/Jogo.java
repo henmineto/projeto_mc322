@@ -27,21 +27,29 @@ public class Jogo {
 		this.mesa = new Mesa(jogador1, jogador2);
 		
 		char acao = 0; // armazena as ações escolhidas pelos jogadores
-		while (jogador1.estaVivo() && jogador2.estaVivo() && acao != 'F') {
+		boolean primeiraJogada = true;
+		while (jogador1.estaVivo() && jogador2.estaVivo()) {
 			mesa.iniciarRodada();
 
-			imprimeMesa();
+			if (primeiraJogada) {
+				imprimeMesa();
+				primeiraJogada = false;
+			}
 			
 			mesa.realizarTurnoAtacante();
 			
-			imprimeMesa();
-			
 			Jogador atacante = mesa.getAtacante();
+
+			impressaoCondicional(atacante);
+
 			acao = atacante.escolherAcao();
 			
 			while (realizaAcao(atacante, acao)) {
 				acao = atacante.escolherAcao();
-				imprimeMesa();
+				if (atacante.deveFazerImpressaoContinua()) {
+					impressaoCondicional(atacante);
+				}
+
 			}
 			
 			mesa.finalizarTurno(atacante);
@@ -49,22 +57,21 @@ public class Jogo {
 			
 			// defensor
 			mesa.realizarTurnoDefensor();
-
-			imprimeMesa();
 			
 			Jogador defensor = mesa.getDefensor();
+
+			impressaoCondicional(defensor);
+
 			acao = defensor.escolherAcao();
 			
-			while (realizaAcao(atacante, acao)) {
-				acao = atacante.escolherAcao();
-				imprimeMesa();
+			while (realizaAcao(defensor, acao)) {
+				acao = defensor.escolherAcao();
+				impressaoCondicional(defensor);
 			}
 			
 			mesa.finalizarTurno(defensor);
 			
 			mesa.realizarCombate();
-			
-			imprimeMesa();
 		}
 	}
 	
@@ -99,8 +106,16 @@ public class Jogo {
 		System.out.print(mensagem);
 	}
 
+	public void impressaoCondicional(Jogador j) {
+		if (j.deveFazerImpressaoContinua()) {
+			imprimeMesa();
+		}
+	}
+
 	public void imprimeMesa() {
+		System.out.println("########################################################################");
 		System.out.println(this.mesa);
+		System.out.println("########################################################################");
 	}
 
 	public static void main(String[] args) {

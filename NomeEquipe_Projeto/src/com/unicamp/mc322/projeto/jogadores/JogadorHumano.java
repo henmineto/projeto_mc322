@@ -22,7 +22,12 @@ public class JogadorHumano extends Jogador {
 				interagirComConfirmacao(mensagemConfirmacao, mensagemPosicao) :
 				interagirSemConfirmacao(mensagemPosicao);
 	}
-	
+
+	@Override
+	public int escolherCartaParaEvocacao(boolean confirmarEscolha) {
+		return escolherCartaNaMao(confirmarEscolha);
+	}
+
 	@Override
 	public int escolherDescartes(boolean confirmarEscolha) {
 		final String mensagemConfirmacao = "Deseja descartar cartas?(S/N): ";

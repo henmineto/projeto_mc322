@@ -156,7 +156,7 @@ public class Mesa {
 	
 	void realizarEvocacaoCartas(Jogador jogador) {
 		try {
-			int indexMao = jogador.escolherCartaNaMao(true);
+			int indexMao = jogador.escolherCartaParaEvocacao(true);
 				
 			if (indexMao >= 0)
 				evocarCarta(jogador, indexMao);
@@ -189,7 +189,7 @@ public class Mesa {
 		for (int i = 0; i < numDescartes; i++) {
 			if (jogador.descartaCarta())
 				numDescartesEfetivos++;
-				Jogo.getInstance().imprimeMesa();
+				Jogo.getInstance().impressaoCondicional(jogador);
 		}
 		for (int j = 0; j < numDescartesEfetivos; j++) {
 			jogador.pegarCarta();

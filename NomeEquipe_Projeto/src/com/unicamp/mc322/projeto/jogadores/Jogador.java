@@ -51,7 +51,7 @@ public abstract class Jogador implements Atacavel {
 		return vidaNexus.getVidaMaxima();
 	}
 	
-	private int getMana() {
+	protected int getMana() {
 		return mana.getMana();
 	}
 	
@@ -120,6 +120,8 @@ public abstract class Jogador implements Atacavel {
 	public abstract int escolherDescartes(boolean confirmarEscolha);
 	
 	public abstract int escolherCartaNaMao(boolean confirmarEscolha);
+
+	public abstract int escolherCartaParaEvocacao(boolean confirmarEscolha);
 	
 	public abstract int escolherUnidadeParaTroca(int limite);
 	
