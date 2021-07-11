@@ -8,6 +8,7 @@ import com.unicamp.mc322.projeto.cartas.Feitico;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.decks.Deck;
 import com.unicamp.mc322.projeto.decks.DeckFactory;
+import com.unicamp.mc322.projeto.jogo.LORException;
 import com.unicamp.mc322.projeto.modulos.ModuloMana;
 import com.unicamp.mc322.projeto.modulos.ModuloVida;
 
@@ -62,32 +63,32 @@ public abstract class Jogador implements Atacavel {
 		return vidaNexus.getVida() > 0;
 	}
 
-	public String getInfoCartaMao(int indexCarta) throws Exception {
+	public String getInfoCartaMao(int indexCarta) throws LORException {
 		if (indexCarta < 0 || indexCarta >= mao.size()) {
-			throw new Exception("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
+			throw new LORException("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
 		}
 
 		return mao.get(indexCarta).getInfo();
 	}
 	
-	public Compravel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
+	public Compravel evocarCarta(int indexCarta, boolean evocarUnidade) throws LORException {
 		if (indexCarta < 0 || indexCarta >= mao.size())
-			throw new Exception("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
+			throw new LORException("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
 			
 		Compravel evocada = mao.get(indexCarta);
 		int custo = evocada.getCusto();
 		
 		if (evocada instanceof Evocavel && !evocarUnidade)
-			throw new Exception("Carta do tipo Unidade n�o pode ser evocada no momento.");
+			throw new LORException("Carta do tipo Unidade n�o pode ser evocada no momento.");
 		
 		comprarCarta(evocada, custo);
 		
 		return mao.remove(indexCarta);
 	}
 	
-	public Compravel substituirCarta(int indexMao, Evocavel cartaMesa) throws Exception {
+	public Compravel substituirCarta(int indexMao, Evocavel cartaMesa) throws LORException {
 		if (indexMao < 0 || indexMao >= mao.size())
-			throw new Exception("Posi��o de carta na m�o inv�lida. Posi��o: "+indexMao+". Quantidade de cartas: "+mao.size());
+			throw new LORException("Posi��o de carta na m�o inv�lida. Posi��o: "+indexMao+". Quantidade de cartas: "+mao.size());
 		
 		return mao.remove(indexMao);
 	}
@@ -134,12 +135,12 @@ public abstract class Jogador implements Atacavel {
 
 	public abstract boolean deveFazerImpressaoContinua();
 	
-	private void comprarCarta(Compravel compra, int custo) throws Exception {
+	private void comprarCarta(Compravel compra, int custo) throws LORException {
 		if (compra instanceof Feitico) {
 			int manaDisponivel = mana.getMana() + manaFeitico.getMana();
 			
 			if (manaDisponivel < custo)
-				throw new Exception("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+manaDisponivel+". Exigido: "+custo);
+				throw new LORException("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+manaDisponivel+". Exigido: "+custo);
 			
 			int feitico = manaFeitico.getMana();
 			manaFeitico.gastarMana(custo);
@@ -147,7 +148,7 @@ public abstract class Jogador implements Atacavel {
 		}
 		
 		if (mana.getMana() < custo) {
-			throw new Exception("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+mana.getMana()+". Exigido: "+custo);
+			throw new LORException("Quantidade de mana insuficiente para evocar carta. Dispon�vel: "+mana.getMana()+". Exigido: "+custo);
 		}
 		
 		mana.gastarMana(custo);

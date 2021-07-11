@@ -2,6 +2,7 @@ package com.unicamp.mc322.projeto.cartas;
 
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.LORException;
 
 public abstract class Efeito {
 	protected boolean usado;
@@ -19,9 +20,9 @@ public abstract class Efeito {
 		return usado;
 	}
 	
-	protected void ativar(Jogador jogador, Ativavel carta) throws Exception {
+	protected void ativar(Jogador jogador, Ativavel carta) throws LORException {
 		if (usado)
-			throw new Exception("N�o � pss�vel ativar esse efeito, pois ele j� foi utilizado.");
+			throw new LORException("N�o � pss�vel ativar esse efeito, pois ele j� foi utilizado.");
 		
 		usado = true;
 	}

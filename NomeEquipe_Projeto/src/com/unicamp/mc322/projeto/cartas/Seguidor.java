@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoTraco;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.LORException;
 import com.unicamp.mc322.projeto.modulos.ModuloAtaque;
 import com.unicamp.mc322.projeto.modulos.ModuloVida;
 
@@ -41,7 +42,7 @@ public class Seguidor extends Carta implements Evocavel {
 	}
 
 	@Override
-	public void ativar(Jogador jogador, AtivacaoEfeito ativacao) throws Exception {
+	public void ativar(Jogador jogador, AtivacaoEfeito ativacao) throws LORException {
 		super.ativar(jogador, ativacao);
 
 		if (ativacao == AtivacaoEfeito.FINAL_DO_TURNO) {

@@ -2,17 +2,10 @@ package com.unicamp.mc322.projeto.jogo;
 
 import com.unicamp.mc322.projeto.jogadores.*;
 
-import java.util.ArrayList;
-
-import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.decks.DeckDemaciaFactory;
-import com.unicamp.mc322.projeto.jogo.Mesa;
 
 public class Jogo {
 	private Mesa mesa;
-	private boolean finalizarPrograma = false;
-	private final int QTD_CARTAS_INICIAIS = 4;
-	private final int QTD_UNIDADES_EVOCADAS = 6;
 
 	private static Jogo singleton;
 

@@ -4,6 +4,7 @@ import com.unicamp.mc322.projeto.cartas.Ativavel;
 import com.unicamp.mc322.projeto.cartas.Efeito;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.LORException;
 import com.unicamp.mc322.projeto.jogo.MediadorEfeitos;
 
 public class BonusStatusUnidade extends Efeito {
@@ -18,7 +19,7 @@ public class BonusStatusUnidade extends Efeito {
 	}
 
 	@Override
-	public void ativar(Jogador jogador, Ativavel carta) throws Exception {
+	public void ativar(Jogador jogador, Ativavel carta) throws LORException {
 		super.ativar(jogador, carta);
 		
 		MediadorEfeitos.getInstance().darBonusStatusUnidadeAliada(jogador, bonusAtaque, bonusDefesa);

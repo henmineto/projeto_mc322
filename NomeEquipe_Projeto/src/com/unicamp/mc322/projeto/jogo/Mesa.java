@@ -96,16 +96,18 @@ public class Mesa {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(j);
 		try {
 			int indexMesa = j.escolherUnidadeParaCampo(unidadesEvocadas.size());
-			if (j.equals(atacante)) {
-				colocarCartaEmCampo(j, indexMesa, quantidadeCartasAtaque);
-				quantidadeCartasAtaque++;
-				indexMesa = j.escolherUnidadeParaCampo(unidadesEvocadas.size());
-			}
-			else if (j.equals(defensor) && quantidadeCartasAtaque > 0) {
-				int indexDefesa = j.escolherPosicaoDefesa(quantidadeCartasAtaque);
-				if (indexDefesa >= quantidadeCartasAtaque)
-					throw new Exception("N�o h� carta de ataque na posi��o escolhida para defesa. Posi��o: "+indexDefesa);
-				colocarCartaEmCampo(defensor, indexMesa, indexDefesa);
+			
+			if (indexMesa >= 0)
+			{
+				if (j.equals(atacante)) {
+					colocarCartaEmCampo(j, indexMesa, quantidadeCartasAtaque++);
+				}
+				else if (j.equals(defensor) && quantidadeCartasAtaque > 0) {
+					int indexDefesa = j.escolherPosicaoDefesa(quantidadeCartasAtaque);
+					if (indexDefesa >= quantidadeCartasAtaque)
+						throw new LORException("N�o h� carta de ataque na posi��o escolhida para defesa. Posi��o: "+indexDefesa);
+					colocarCartaEmCampo(defensor, indexMesa, indexDefesa);
+				}
 			}
 		}
 		catch (Exception ex) {
@@ -165,14 +167,17 @@ public class Mesa {
 	}
 
 	String getInfoCarta(Jogador jogador) {
+		String retorno = "";
 		try {
 			int indexMao = jogador.escolherCartaNaMao(true);
-
-			return jogador.getInfoCartaMao(indexMao);
+			
+			if (indexMao >= 0)
+				retorno = jogador.getInfoCartaMao(indexMao);
+			
 		} catch (Exception ex) {
 			jogador.exibirMensagemErro(ex.getMessage());
-			return "";
 		}
+		return retorno;
 	}
 	
 	private void realizarSubstituicaoCartas(Jogador jogador) {
@@ -191,7 +196,7 @@ public class Mesa {
 		}
 	}
 	
-	private void evocarCarta(Jogador jogador, int indexMao) throws Exception {
+	private void evocarCarta(Jogador jogador, int indexMao) throws LORException {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		
 		Compravel carta = jogador.evocarCarta(indexMao, podeEvocarUnidade(unidadesEvocadas));
@@ -203,32 +208,15 @@ public class Mesa {
 		}
 	}
 	
-	private void substituirCarta(Jogador jogador, int indexMao, int indexMesa) throws Exception {
-		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
-		
-		if (indexMesa < 0 || indexMesa >= unidadesEvocadas.size())
-			throw new Exception("Posi��o de carta na mesa inv�lida. Posi��o: "+indexMesa+". Quantidade de cartas: "+unidadesEvocadas.size());
-		
-		Evocavel substituida = unidadesEvocadas.get(indexMesa);
-		Compravel substituta = jogador.substituirCarta(indexMao, substituida);
-	
-		substituta.ativar(jogador, AtivacaoEfeito.EVOCACAO_DA_CARTA);
-		unidadesEvocadas.remove(indexMesa);
-		
-		if(substituta instanceof Evocavel) {
-			unidadesEvocadas.add((Evocavel)substituta);
-		}
-	}
-	
-	private void colocarCartaEmCampo(Jogador jogador, int indexEvocadas, int indexCampo) throws Exception {
+	private void colocarCartaEmCampo(Jogador jogador, int indexEvocadas, int indexCampo) throws LORException {
 		ArrayList<Evocavel> unidadesEvocadas = getUnidadesEvocadas(jogador);
 		Evocavel[] unidadesEmCampo = getUnidadesEmCampo(jogador);
 		
 		if (indexEvocadas < 0 || indexEvocadas >= unidadesEvocadas.size())
-			throw new Exception("Posi��o de carta evocada inv�lida. Posi��o: "+indexEvocadas+". Quantidade de cartas: "+unidadesEvocadas.size());
+			throw new LORException("Posi��o de carta evocada inv�lida. Posi��o: "+indexEvocadas+". Quantidade de cartas: "+unidadesEvocadas.size());
 		
 		if (indexCampo < 0 || indexCampo >= unidadesEmCampo.length)
-			throw new Exception("Posi��o do campo inv�lida. Posi��o: "+indexCampo+". Quantidade de posi��es: "+unidadesEmCampo.length);
+			throw new LORException("Posi��o do campo inv�lida. Posi��o: "+indexCampo+". Quantidade de posi��es: "+unidadesEmCampo.length);
 		
 		if (unidadesEmCampo[indexCampo] != null) {
 			unidadesEvocadas.add(unidadesEmCampo[indexCampo]);

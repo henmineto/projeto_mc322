@@ -1,9 +1,7 @@
 package com.unicamp.mc322.projeto.cartas.condicoes;
 
 import com.unicamp.mc322.projeto.cartas.Atacavel;
-import com.unicamp.mc322.projeto.cartas.Campeao;
 import com.unicamp.mc322.projeto.cartas.ModuloCondicao;
-import com.unicamp.mc322.projeto.cartas.Evocavel;
 
 public class QuantidadeDanoIncrementado extends ModuloCondicao {
 

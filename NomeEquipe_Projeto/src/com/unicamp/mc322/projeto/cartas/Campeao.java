@@ -6,7 +6,6 @@ public class Campeao extends Seguidor {
 	
 	private ModuloCondicao condicao;
 	private ArrayList<ModuloEvolucao> evolucoes;
-	private boolean nivelSuperior;
 
 	public Campeao(String nome, int vida, int ataque, int custo, ModuloCondicao condicao) {
 		super(nome, vida, ataque, custo);
@@ -34,7 +33,6 @@ public class Campeao extends Seguidor {
 	
 	void evoluir() {
 		if (evolucoes != null) {
-			nivelSuperior = true;
 			for (ModuloEvolucao evolucao : evolucoes) {
 				evolucao.evoluir();
 			}
@@ -49,7 +47,7 @@ public class Campeao extends Seguidor {
 		}
 	}
 
-	private String getInfoEvoluções() {
+	private String getInfoEvolucoes() {
 		String txt;
 
 		if (evolucoes.size() > 0) {
@@ -75,6 +73,6 @@ public class Campeao extends Seguidor {
 
 	@Override
 	public String getInfo() {
-		return "Campeão - " + condicao  + " e " + getInfoEvoluções() + " - " + getInfoParcial();
+		return "Campeão - " + condicao  + " e " + getInfoEvolucoes() + " - " + getInfoParcial();
 	}
 }

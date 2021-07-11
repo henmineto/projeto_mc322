@@ -124,7 +124,7 @@ public class MediadorEfeitos {
 		
 		boolean aplicarEfeito = true;
 		
-		while(aplicarEfeito) {
+		while(aplicarEfeito && unidadesOponente.size() > 0) {
 			try {
 				int indexUnidade = jogador.escolherUnidadeParaAtaque(unidadesOponente.size());
 				
@@ -146,7 +146,7 @@ public class MediadorEfeitos {
 		
 		boolean aplicarEfeito = true;
 		
-		while(aplicarEfeito) {
+		while(aplicarEfeito && unidadesEvocadas.size() > 0) {
 			try {
 				int indexUnidade = jogador.escolherUnidadeParaBonus(unidadesEvocadas.size());
 				

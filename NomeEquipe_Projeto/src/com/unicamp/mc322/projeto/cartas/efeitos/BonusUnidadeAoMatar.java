@@ -5,6 +5,7 @@ import com.unicamp.mc322.projeto.cartas.Efeito;
 import com.unicamp.mc322.projeto.cartas.Evocavel;
 import com.unicamp.mc322.projeto.cartas.ativacoes.AtivacaoEfeito;
 import com.unicamp.mc322.projeto.jogadores.Jogador;
+import com.unicamp.mc322.projeto.jogo.LORException;
 import com.unicamp.mc322.projeto.jogo.MediadorEfeitos;
 
 public class BonusUnidadeAoMatar extends Efeito {
@@ -19,7 +20,7 @@ public class BonusUnidadeAoMatar extends Efeito {
 	}
 
 	@Override
-	public void ativar(Jogador jogador, Ativavel carta) throws Exception {
+	public void ativar(Jogador jogador, Ativavel carta) throws LORException {
 		if (carta instanceof Evocavel) {
 			if (((Evocavel)carta).verificarMatouNesseTurno()) {
 				super.ativar(jogador, carta);
@@ -28,7 +29,7 @@ public class BonusUnidadeAoMatar extends Efeito {
 			}
 		}
 		else {
-			throw new Exception("Efeito BonusUnidadeAoMatar n�o pode ser usado nessa carta: "+ carta);
+			throw new LORException("Efeito BonusUnidadeAoMatar n�o pode ser usado nessa carta: "+ carta);
 		}
 	}
 
