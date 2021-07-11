@@ -157,11 +157,16 @@ public class Seguidor extends Carta implements Evocavel {
 	}
 
 	protected String getInfoParcial() {
-		return toString() + " - V: " + vida.getVida() + "/" + vida.getVidaMaxima() + " A: " + ataque.getAtaque() + " - " + getInfoEfeitos() + " - " + getInfoTracos();
+		return toString() + " - V " + vida.getVida() + "/" + vida.getVidaMaxima() + " A " + ataque.getAtaque() + " - " + getInfoEfeitos() + " - " + getInfoTracos();
 	}
 
 	@Override
 	public String getInfo() {
 		return "Unidade - " + getInfoParcial();
+	}
+
+	@Override
+	public String toString() {
+		return vida.getVida() + "/" + vida.getVidaMaxima() + " " + ataque.getAtaque() + " " + super.toString();
 	}
 }
