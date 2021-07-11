@@ -120,7 +120,7 @@ public class Mesa {
 			if (unidadesEmCampoAtacante[i] != null) {
 				for (int j = 0; j < unidadesEmCampoAtacante[i].getAtaquesPorTurno(); j++) {
 					if (realizarCombateUnidades(unidadesEmCampoAtacante[i], unidadesEmCampoDefensor[i])) {
-						Jogo.getInstance().mostrarMensagem(unidadesEmCampoAtacante[i] + " ataca " + unidadesEmCampoDefensor[i] + "!\n");
+
 						if (!unidadesEmCampoDefensor[i].estaVivo()) {
 							Jogo.getInstance().mostrarMensagem(unidadesEmCampoDefensor[i] + " morreu!\n");
 							unidadesEmCampoDefensor[i] = null;
@@ -147,6 +147,7 @@ public class Mesa {
 	
 	boolean realizarCombateUnidades(Evocavel atacante, Evocavel defensor) {
 		if (validarDefesa(atacante, defensor)) {
+			Jogo.getInstance().mostrarMensagem(atacante + " ataca " + defensor + "!\n");
 			atacante.atacar(defensor);
 			
 			if (!defensor.estaVivo() && atacante.isFuria()) {

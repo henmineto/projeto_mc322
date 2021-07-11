@@ -117,9 +117,9 @@ public class Bot extends Jogador {
 
 	@Override
 	public char escolherAcao() {
-		int n = random.nextInt(5);
+		int n = random.nextInt(7);
 		// evocar carta, colocar carta no campo, terminar turno (respectivamente)
-		final char[] escolhas = {'E', 'E', 'C', 'C', 'T'};
+		final char[] escolhas = {'E', 'E', 'E', 'C', 'C', 'C', 'T'};
 		char escolha = escolhas[n];
 		return escolha;
 	}

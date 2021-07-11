@@ -56,7 +56,7 @@ public class JogadorHumano extends Jogador {
 
 	@Override
 	public int escolherPosicaoDefesa(int limite) {
-		return interagirSemConfirmacao("Escolha a posicao da unidade evocada: ");
+		return interagirSemConfirmacao("Escolha a posicao a defender: ");
 	}
 	
 	@Override
