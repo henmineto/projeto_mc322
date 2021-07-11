@@ -19,4 +19,9 @@ public class GeraEscudo extends Efeito {
 
         MediadorEfeitos.getInstance().garantirEscudoUnidade(jogador);
     }
+
+    @Override
+    public String toString() {
+        return "Gera uma escudo em uma unidade em " + momento;
+    }
 }

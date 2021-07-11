@@ -48,4 +48,33 @@ public class Campeao extends Seguidor {
 			this.condicao.setCampeao(this);
 		}
 	}
+
+	private String getInfoEvoluções() {
+		String txt;
+
+		if (evolucoes.size() > 0) {
+			txt = "Tem os bonus: (";
+			boolean virgula = false;
+
+			for (int i = 0; i < evolucoes.size(); i++) {
+				if (virgula) {
+					txt += ", ";
+				}
+				virgula = true;
+
+				txt += evolucoes.get(i);
+			}
+
+			txt += ")";
+		} else {
+			txt = "Sem bonus de evolução";
+		}
+
+		return txt;
+	}
+
+	@Override
+	public String getInfo() {
+		return "Campeão - " + condicao  + " e " + getInfoEvoluções() + " - " + getInfoParcial();
+	}
 }

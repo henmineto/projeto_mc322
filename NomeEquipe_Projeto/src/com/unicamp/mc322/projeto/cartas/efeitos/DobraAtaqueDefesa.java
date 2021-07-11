@@ -19,4 +19,9 @@ public class DobraAtaqueDefesa extends Efeito {
 		
 		MediadorEfeitos.getInstance().dobrarAtaqueDefesaUnidadeAliada(jogador);
 	}
+
+	@Override
+	public String toString() {
+		return "Dobra a vida e ataque de uma unidade em " + momento;
+	}
 }

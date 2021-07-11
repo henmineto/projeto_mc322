@@ -8,4 +8,8 @@ public class QuantidadeAtaque extends ModuloCondicao {
 		super(objetivo);
 	}
 
+	@Override
+	public String toString() {
+		return "Evolui ao atacar " + objetivo + " vezes";
+	}
 }

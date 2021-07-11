@@ -24,7 +24,12 @@ public class BonusCartaDestruicao extends Efeito {
 			}
 		}
 		else {
-			throw new Exception("Efeito BonusCartaDestruicao não pode ser usado nessa carta: "+ carta);
+			throw new Exception("Efeito BonusCartaDestruicao nï¿½o pode ser usado nessa carta: "+ carta);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Puxe uma carta quando esta carta for destruÃ­da";
 	}
 }

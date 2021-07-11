@@ -25,4 +25,8 @@ public class QuantidadeDanoCausado extends ModuloCondicao {
 
     }
 
+    @Override
+    public String toString() {
+        return "Evolui ao causar " + objetivo + " dano";
+    }
 }

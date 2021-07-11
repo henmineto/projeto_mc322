@@ -61,6 +61,14 @@ public abstract class Jogador implements Atacavel {
 	public boolean estaVivo() {
 		return vidaNexus.getVida() > 0;
 	}
+
+	public String getInfoCartaMao(int indexCarta) throws Exception {
+		if (indexCarta < 0 || indexCarta >= mao.size()) {
+			throw new Exception("Posi��o de carta na m�o inv�lida. Posi��o: "+indexCarta+". Quantidade de cartas: "+mao.size());
+		}
+
+		return mao.get(indexCarta).getInfo();
+	}
 	
 	public Compravel evocarCarta(int indexCarta, boolean evocarUnidade) throws Exception {
 		if (indexCarta < 0 || indexCarta >= mao.size())
@@ -91,7 +99,7 @@ public abstract class Jogador implements Atacavel {
 	public void pegarCarta() {
 		Compravel carta = deck.pegarCarta();
 		if (carta != null)
-			mao.add(deck.pegarCarta());
+			mao.add(carta);
 	}
 	
 	public boolean descartaCarta() {
@@ -123,6 +131,8 @@ public abstract class Jogador implements Atacavel {
 	public abstract int escolherUnidadeParaAtaque(int limite);
 	
 	public abstract void exibirMensagemErro(String mensagem);
+
+	public abstract boolean deveFazerImpressaoContinua();
 	
 	private void comprarCarta(Compravel compra, int custo) throws Exception {
 		if (compra instanceof Feitico) {

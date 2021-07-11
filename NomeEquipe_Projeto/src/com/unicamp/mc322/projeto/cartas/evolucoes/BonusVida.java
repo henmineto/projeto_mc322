@@ -15,4 +15,8 @@ public class BonusVida extends ModuloEvolucao {
 		campeao.aumentarVida(bonusVida);
 	}
 
+	@Override
+	public String toString() {
+		return "Recebe " + bonusVida + " vida";
+	}
 }

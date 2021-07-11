@@ -23,4 +23,9 @@ public class BonusStatusGlobal extends Efeito {
 		
 		MediadorEfeitos.getInstance().darBonusStatusGlobal(jogador, bonusAtaque, bonusDefesa);
 	}
+
+	@Override
+	public String toString() {
+		return "Todas as unidades aliadas recebem +" + bonusDefesa + "/+" + bonusAtaque + " em " + momento;
+	}
 }

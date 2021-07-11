@@ -103,4 +103,9 @@ public class Bot extends Jogador {
 		char escolha = escolhas[n];
 		return escolha;
 	}
+
+	@Override
+	public boolean deveFazerImpressaoContinua() {
+		return false;
+	}
 }

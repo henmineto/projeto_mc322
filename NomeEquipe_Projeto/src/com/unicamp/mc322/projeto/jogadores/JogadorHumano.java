@@ -3,6 +3,7 @@ package com.unicamp.mc322.projeto.jogadores;
 import java.util.Scanner;
 
 import com.unicamp.mc322.projeto.decks.DeckFactory;
+import com.unicamp.mc322.projeto.jogo.Jogo;
 
 public class JogadorHumano extends Jogador {
 	private Scanner scanner;
@@ -72,7 +73,7 @@ public class JogadorHumano extends Jogador {
 		int index = -1;
 		boolean desejaEscolher = false;
 
-		System.out.print(mensagemConfirmacao);
+		Jogo.getInstance().mostrarMensagem(mensagemConfirmacao);
 		desejaEscolher = scanner.next().toUpperCase().trim().equals("S");
 		
 		if (desejaEscolher) {
@@ -83,14 +84,22 @@ public class JogadorHumano extends Jogador {
 	}
 	
 	private int interagirSemConfirmacao(String mensagemPosicao) {
-		System.out.print(mensagemPosicao);
+		Jogo.getInstance().mostrarMensagem(mensagemPosicao);
 		return scanner.nextInt();
 	}
 
 	@Override
 	public char escolherAcao() {
+		final String mensagemAcao = "I - Informações da carta; E - Evocar carta da mão; C - Colocar carta em campo; T - Terminar turno; F - Finalizar jogo: ";
+
+		Jogo.getInstance().mostrarMensagem(mensagemAcao);
 		char escolha = scanner.next().toUpperCase().charAt(0);
 		return escolha;
+	}
+
+	@Override
+	public boolean deveFazerImpressaoContinua() {
+		return true;
 	}
 
 }

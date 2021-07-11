@@ -25,4 +25,9 @@ public class QuantidadeSeguidoresMortos extends ModuloCondicao {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Evolui ao matar " + objetivo + " seguidores";
+	}
+
 }

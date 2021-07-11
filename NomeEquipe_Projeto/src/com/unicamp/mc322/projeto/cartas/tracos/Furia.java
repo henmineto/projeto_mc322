@@ -28,4 +28,8 @@ public class Furia extends Traco {
         evocavel.setFuria(bonusVida, bonusAtaque);
     }
 
+    @Override
+    public String toString() {
+        return "Fúria (+" + bonusVida + "/+" + bonusAtaque + ")";
+    }
 }

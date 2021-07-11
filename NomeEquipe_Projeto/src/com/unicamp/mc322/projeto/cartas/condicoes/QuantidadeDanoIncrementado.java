@@ -23,4 +23,9 @@ public class QuantidadeDanoIncrementado extends ModuloCondicao {
         super.contabilizarDanoSofrido(quantidadeAtingida);
     }
 
+    @Override
+    public String toString() {
+        return "Evolui ao sofrer " + objetivo + " dano";
+    }
+
 }

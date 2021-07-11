@@ -14,5 +14,9 @@ public class Elusivo extends Traco {
 	protected void ativar(Evocavel evocavel) {
 		evocavel.setElusivo();
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Elusivo";
+	}
 }

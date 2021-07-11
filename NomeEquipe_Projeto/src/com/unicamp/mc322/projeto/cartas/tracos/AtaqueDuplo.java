@@ -15,4 +15,8 @@ public class AtaqueDuplo extends Traco {
         evocavel.setAtaqueDuplo();
     }
 
+    @Override
+    public String toString() {
+        return "Ataque Duplo";
+    }
 }

@@ -14,4 +14,8 @@ public class BonusPoder extends ModuloEvolucao {
 		campeao.aumentarDano(bonus);
 	}
 
+	@Override
+	public String toString() {
+		return "Recebe " + bonus + " dano";
+	}
 }

@@ -16,4 +16,8 @@ public class BonusTraco extends ModuloEvolucao {
 		campeao.addTraco(bonusTraco);
 	}
 
+	@Override
+	public String toString() {
+		return "Recebe o traço " + bonusTraco;
+	}
 }

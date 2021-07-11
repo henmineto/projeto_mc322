@@ -5,7 +5,7 @@ import com.unicamp.mc322.projeto.jogadores.Jogador;
 
 public abstract class Efeito {
 	protected boolean usado;
-	private AtivacaoEfeito momento;
+	protected AtivacaoEfeito momento;
 	
 	protected Efeito(AtivacaoEfeito momento) {
 		this.momento = momento;
@@ -21,8 +21,13 @@ public abstract class Efeito {
 	
 	protected void ativar(Jogador jogador, Ativavel carta) throws Exception {
 		if (usado)
-			throw new Exception("Não é pssível ativar esse efeito, pois ele já foi utilizado.");
+			throw new Exception("Nï¿½o ï¿½ pssï¿½vel ativar esse efeito, pois ele jï¿½ foi utilizado.");
 		
 		usado = true;
+	}
+
+	@Override
+	public String toString() {
+		return "Efeito";
 	}
 }

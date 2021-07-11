@@ -19,4 +19,9 @@ public class ForcaAtaqueNexus extends Efeito {
 		
 		MediadorEfeitos.getInstance().atacarNexusInimigo(jogador);
 	}
+
+	@Override
+	public String toString() {
+		return "Força um ataque contra o nexus inimigo em " + momento;
+	}
 }

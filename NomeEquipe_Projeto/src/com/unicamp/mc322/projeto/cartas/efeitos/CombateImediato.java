@@ -18,4 +18,9 @@ public class CombateImediato extends Efeito {
 		
 		MediadorEfeitos.getInstance().realizarCombateImediato(jogador);
 	}
+
+	@Override
+	public String toString() {
+		return "Força combate com inimigo em " + momento;
+	}
 }

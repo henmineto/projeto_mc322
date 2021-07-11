@@ -35,4 +35,28 @@ public abstract class Carta implements Compravel {
 	public String toString() {
 		return nome + " (" + custo + ")";
 	}
+
+	protected String getInfoEfeitos() {
+		String txt;
+
+		if (efeitos.size() > 0) {
+			txt = "Efeitos: (";
+			boolean virgula = false;
+
+			for (int i = 0; i < efeitos.size(); i++) {
+				if (virgula) {
+					txt += ", ";
+				}
+				virgula = true;
+
+				txt += efeitos.get(i);
+			}
+
+			txt += ")";
+		} else {
+			txt = "Sem efeitos";
+		}
+
+		return txt;
+	}
 }

@@ -19,4 +19,9 @@ public class ZeraPoder extends Efeito {
 
         MediadorEfeitos.getInstance().zerarAtaqueUnidade(jogador);
     }
+
+    @Override
+    public String toString() {
+        return "Zera o ataque de uma unidade por um turno em " + momento;
+    }
 }

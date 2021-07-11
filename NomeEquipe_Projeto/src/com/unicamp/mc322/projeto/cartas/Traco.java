@@ -14,4 +14,9 @@ public abstract class Traco {
 	}
 	
 	protected abstract void ativar(Evocavel evocavel);
+
+	@Override
+	public String toString() {
+		return "Traco";
+	}
 }

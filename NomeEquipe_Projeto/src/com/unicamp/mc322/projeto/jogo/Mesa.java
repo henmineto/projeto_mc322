@@ -13,7 +13,9 @@ public class Mesa {
 
 	private Jogador jogador1;
 	private Jogador jogador2;
-	
+
+	private String nomeAtacante;
+	private String nomeDefensor;
 	private Jogador atacante;
 	private Jogador defensor;
 	private int quantidadeRodadas;
@@ -52,11 +54,15 @@ public class Mesa {
 		quantidadeRodadas++;
 		
 		if (atacante == null || atacante == jogador2) {
+			nomeAtacante = "J1";
 			atacante = jogador1;
+			nomeDefensor = "J2";
 			defensor = jogador2;
 		}
 		else {
+			nomeAtacante = "J2";
 			atacante = jogador2;
+			nomeDefensor = "J1";
 			defensor = jogador1;
 		}
 		
@@ -150,11 +156,22 @@ public class Mesa {
 		try {
 			int indexMao = jogador.escolherCartaNaMao(true);
 				
-			if (indexMao > 0)
+			if (indexMao >= 0)
 				evocarCarta(jogador, indexMao);
 		}
 		catch (Exception ex) {
 			jogador.exibirMensagemErro(ex.getMessage());
+		}
+	}
+
+	String getInfoCarta(Jogador jogador) {
+		try {
+			int indexMao = jogador.escolherCartaNaMao(true);
+
+			return jogador.getInfoCartaMao(indexMao);
+		} catch (Exception ex) {
+			jogador.exibirMensagemErro(ex.getMessage());
+			return "";
 		}
 	}
 	
@@ -167,6 +184,7 @@ public class Mesa {
 		for (int i = 0; i < numDescartes; i++) {
 			if (jogador.descartaCarta())
 				numDescartesEfetivos++;
+				Jogo.getInstance().imprimeMesa();
 		}
 		for (int j = 0; j < numDescartesEfetivos; j++) {
 			jogador.pegarCarta();
@@ -217,6 +235,10 @@ public class Mesa {
 		}
 	
 		unidadesEmCampo[indexCampo] = unidadesEvocadas.remove(indexEvocadas);
+
+		if (jogador.deveFazerImpressaoContinua()) {
+			Jogo.getInstance().imprimeMesa();
+		}
 	}
 	
 	void finalizarTurno(Jogador jogador) {
@@ -274,21 +296,41 @@ public class Mesa {
 	public String toString() {
 		String txt = "Jogador 2:\n";
 		txt += this.jogador2;
+		txt += "\n" + formataUnidadesEvocadas(jogador2);
 		txt += formataUnidadesEmCampo();
 		txt += "\nJogador 1:\n";
+		txt += formataUnidadesEvocadas(jogador1) + "\n";
 		txt += this.jogador1;
 		return txt;
 	}
-	
+
+	private String formataUnidadesEvocadas(Jogador jogador) {
+		ArrayList<Evocavel> evocadas = getUnidadesEvocadas(jogador);
+
+		String txt = "";
+
+		if (evocadas.size() > 0) {
+			txt += "Unidades Evocadas: ";
+
+			for (int i = 0; i < evocadas.size(); i++) {
+				txt += "\n" + i + ": " + evocadas.get(i);
+			}
+		} else {
+			txt += "Nenhuma unidade evocada";
+		}
+
+		return txt;
+	}
+
 	private String formataUnidadesEmCampo() {
-		String txt = "\nAtacante:";
+		String txt = "\nAtacante (" + nomeAtacante + "):";
 		for (int i = 0; i < this.unidadesEmCampoAtacante.length; i++) {
 			txt += "\n" + i + ": ";
 			if (this.unidadesEmCampoAtacante[i] != null) {
 				txt += this.unidadesEmCampoAtacante[i];
 			}
 		}
-		txt += "\nDefensor:";
+		txt += "\nDefensor (" + nomeDefensor + "):";
 		for (int i = 0; i < this.unidadesEmCampoDefensor.length; i++) {
 			txt += "\n" + i + ": ";
 			if (this.unidadesEmCampoDefensor[i] != null) {

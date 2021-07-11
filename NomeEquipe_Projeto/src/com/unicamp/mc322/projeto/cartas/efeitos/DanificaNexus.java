@@ -23,4 +23,9 @@ public class DanificaNexus extends Efeito {
         MediadorEfeitos.getInstance().danificarNexusInimigo(jogador, dano);
     }
 
+    @Override
+    public String toString() {
+        return "Causa " + dano + " de dano ao nexus inimigo em " + momento;
+    }
+
 }

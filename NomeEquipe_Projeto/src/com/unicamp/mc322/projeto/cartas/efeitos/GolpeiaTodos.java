@@ -19,4 +19,9 @@ public class GolpeiaTodos extends Efeito {
 		
 		MediadorEfeitos.getInstance().golpearTodosEvocadosOponente(jogador);
 	}
+
+	@Override
+	public String toString() {
+		return "Força um ataque em todas as unidades inimigas em " + momento;
+	}
 }

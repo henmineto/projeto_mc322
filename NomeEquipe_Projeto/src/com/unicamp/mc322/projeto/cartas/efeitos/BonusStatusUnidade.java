@@ -23,4 +23,9 @@ public class BonusStatusUnidade extends Efeito {
 		
 		MediadorEfeitos.getInstance().darBonusStatusUnidadeAliada(jogador, bonusAtaque, bonusDefesa);
 	}
+
+	@Override
+	public String toString() {
+		return "Uma unidade recebe +" + bonusDefesa + "/+" + bonusAtaque + " em " + momento;
+	}
 }

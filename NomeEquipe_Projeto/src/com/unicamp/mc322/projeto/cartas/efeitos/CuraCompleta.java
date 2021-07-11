@@ -20,4 +20,9 @@ public class CuraCompleta extends Efeito {
 		MediadorEfeitos.getInstance().realizarCuraCompleta(jogador);
 	}
 
+	@Override
+	public String toString() {
+		return "Cura completamente uma unidade em " + momento;
+	}
+
 }

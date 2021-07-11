@@ -9,4 +9,9 @@ public abstract class ModuloEvolucao {
 	}
 	
 	protected abstract void evoluir();
+
+	@Override
+	public String toString() {
+		return "Evolução";
+	}
 }

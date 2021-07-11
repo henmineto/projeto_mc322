@@ -32,4 +32,9 @@ public class BonusUnidadeAoMatar extends Efeito {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Ao destruir uma unidade inimiga, receba unidade";
+	}
+
 }

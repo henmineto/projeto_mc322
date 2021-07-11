@@ -130,4 +130,37 @@ public class Seguidor extends Carta implements Evocavel {
 	public boolean verificarMatouNesseTurno() {
 		return matouNesseTurno;
 	}
+
+	public String getInfoTracos() {
+		String txt;
+
+		if (tracos.size() > 0) {
+			txt = "Traços: (";
+			boolean virgula = false;
+
+			for (int i = 0; i < tracos.size(); i++) {
+				if (virgula) {
+					txt += ", ";
+				}
+				virgula = true;
+
+				txt += tracos.get(i);
+			}
+
+			txt += ")";
+		} else {
+			txt = "Sem traços";
+		}
+
+		return txt;
+	}
+
+	protected String getInfoParcial() {
+		return toString() + " - V: " + vida.getVida() + "/" + vida.getVidaMaxima() + " A: " + ataque.getAtaque() + " - " + getInfoEfeitos() + " - " + getInfoTracos();
+	}
+
+	@Override
+	public String getInfo() {
+		return "Unidade - " + getInfoParcial();
+	}
 }

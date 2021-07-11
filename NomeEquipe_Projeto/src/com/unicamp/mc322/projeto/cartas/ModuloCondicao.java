@@ -2,7 +2,7 @@ package com.unicamp.mc322.projeto.cartas;
 
 public abstract class ModuloCondicao {
 	protected int quantidadeAtingida;
-	private int objetivo;
+	protected int objetivo;
 	private Campeao campeao;
 	
 	protected ModuloCondicao(int objetivo) {
@@ -29,5 +29,10 @@ public abstract class ModuloCondicao {
 	
 	void setCampeao(Campeao campeao) {
 		this.campeao = campeao;
+	}
+
+	@Override
+	public String toString() {
+		return "Condição";
 	}
 }
