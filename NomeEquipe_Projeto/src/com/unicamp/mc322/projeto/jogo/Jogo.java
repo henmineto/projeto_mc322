@@ -2,6 +2,8 @@ package com.unicamp.mc322.projeto.jogo;
 
 import com.unicamp.mc322.projeto.jogadores.*;
 
+import java.io.IOException;
+
 import com.unicamp.mc322.projeto.decks.DeckDemaciaFactory;
 
 public class Jogo {
@@ -74,6 +76,18 @@ public class Jogo {
 			mesa.finalizarTurno(defensor);
 			
 			mesa.realizarCombate();
+		}
+		
+		imprimeMesa();
+		
+		if (jogador1.estaVivo()) {
+			mostrarMensagem("Jogador 1 venceu!\n");
+		}
+		else if(jogador2.estaVivo()) {
+			mostrarMensagem("Jogador 2 venceu!\n");
+		}
+		else {
+			mostrarMensagem("Houve um empate!\n");
 		}
 	}
 	
