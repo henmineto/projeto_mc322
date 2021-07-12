@@ -10,6 +10,7 @@ import com.unicamp.mc322.projeto.jogadores.Jogador;
 public class Mesa {
 	private final int QTD_UNIDADES_EVOCADAS = 6;
 	private final int QTD_CARTAS_INICIAIS = 4;
+	private final int QTD_MAX_DESCARTES = 4;
 
 	private Jogador jogador1;
 	private Jogador jogador2;
@@ -182,7 +183,7 @@ public class Mesa {
 	private void realizarSubstituicaoCartas(Jogador jogador) {
 		boolean descartarCarta = true;
 		
-		int numDescartes = jogador.escolherDescartes(descartarCarta);
+		int numDescartes = Math.min(jogador.escolherDescartes(descartarCarta), QTD_MAX_DESCARTES);
 		int numDescartesEfetivos = 0;
 		
 		for (int i = 0; i < numDescartes; i++) {
