@@ -24,7 +24,7 @@ public class Jogo {
 	}
 	
 	private void start() {
-		Jogador jogador1 = new Bot(20, new DeckDemaciaFactory());
+		Jogador jogador1 = new JogadorHumano(20, new DeckDemaciaFactory());
 		Jogador jogador2 = new Bot(20, new DeckDemaciaFactory());
 		this.mesa = new Mesa(jogador1, jogador2);
 		
