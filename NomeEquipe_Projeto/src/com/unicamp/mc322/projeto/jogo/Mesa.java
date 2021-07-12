@@ -80,16 +80,10 @@ public class Mesa {
 		jogador2.resetarMana(quantidadeRodadas);
 	}
 	
-	public void realizarTurnoAtacante() {
+	public void iniciarTurno(Jogador j) {
 		// substitui cartas na 1ª rodada
 		if (quantidadeRodadas == 1)
-			realizarSubstituicaoCartas(atacante);
-	}
-	
-	public void realizarTurnoDefensor() {
-		// substitui cartas na 1ª rodada
-		if (quantidadeRodadas == 1)
-			realizarSubstituicaoCartas(defensor);
+			realizarSubstituicaoCartas(j);
 	}
 	
 	public void addUnidadeCampo(Jogador j) {

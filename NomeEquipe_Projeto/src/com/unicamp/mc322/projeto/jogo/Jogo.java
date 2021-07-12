@@ -22,7 +22,7 @@ public class Jogo {
 	}
 	
 	private void start() {
-		Jogador jogador1 = new JogadorHumano(20, new DeckDemaciaFactory());
+		Jogador jogador1 = new Bot(20, new DeckDemaciaFactory());
 		Jogador jogador2 = new Bot(20, new DeckDemaciaFactory());
 		this.mesa = new Mesa(jogador1, jogador2);
 		
@@ -37,11 +37,11 @@ public class Jogo {
 			}
 
 			mostrarMensagem("Turno do atacante\n");
-			mesa.realizarTurnoAtacante();
-			
 			Jogador atacante = mesa.getAtacante();
+			
+			mesa.iniciarTurno(atacante);
 
-			impressaoCondicional(atacante);
+			imprimeMesa();
 
 			acao = atacante.escolherAcao();
 			
@@ -58,11 +58,11 @@ public class Jogo {
 			
 			// defensor
 			mostrarMensagem("Turno do defensor\n");
-			mesa.realizarTurnoDefensor();
-			
 			Jogador defensor = mesa.getDefensor();
+			
+			mesa.iniciarTurno(defensor);
 
-			impressaoCondicional(defensor);
+			imprimeMesa();
 
 			acao = defensor.escolherAcao();
 			
